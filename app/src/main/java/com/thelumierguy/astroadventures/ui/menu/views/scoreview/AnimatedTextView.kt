@@ -27,22 +27,22 @@ class AnimatedTextView @JvmOverloads constructor(
         }
 
         valueAnimator.addListener(object : Animator.AnimatorListener {
-            override fun onAnimationStart(animation: Animator?) {
+            override fun onAnimationStart(animation: Animator) {
                 paint.apply {
                     setShadowLayer(12F, 0F, 0F, textColors.defaultColor)
                 }
             }
 
-            override fun onAnimationEnd(animation: Animator?) {
+            override fun onAnimationEnd(animation: Animator) {
                 paint.clearShadowLayer()
                 onEnd()
             }
 
-            override fun onAnimationCancel(animation: Animator?) {
+            override fun onAnimationCancel(animation: Animator) {
 
             }
 
-            override fun onAnimationRepeat(animation: Animator?) {
+            override fun onAnimationRepeat(animation: Animator) {
             }
 
         })

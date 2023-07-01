@@ -4,20 +4,12 @@ plugins {
 }
 
 android {
-    signingConfigs {
-        release {
-            storeFile file('/home/piyushp/galagaRelease.jks')
-            storePassword 'piyush'
-            keyAlias 'galagaRelease'
-            keyPassword 'piyush'
-        }
-    }
-    compileSdkVersion 30
+    compileSdk 33
 
     defaultConfig {
-        applicationId "com.thelumierguy.astroadventures"
+        applicationId "com.roy93group.astroadventures"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
 
@@ -36,7 +28,7 @@ android {
                 obfuscate false
                 optimizeCode true
             }
-            signingConfig signingConfigs.release
+//            signingConfig signingConfigs.release
         }
     }
     compileOptions {
