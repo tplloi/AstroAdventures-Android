@@ -13,7 +13,6 @@ android {
         }
     }
     compileSdkVersion 30
-    buildToolsVersion '30.0.2'
 
     defaultConfig {
         applicationId "com.thelumierguy.astroadventures"
@@ -25,7 +24,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     packagingOptions {
-        exclude "DebugProbesKt.bin"
+        resources {
+            excludes += ['DebugProbesKt.bin']
+        }
     }
     buildTypes {
         release {
@@ -48,6 +49,7 @@ android {
     buildFeatures {
         viewBinding true
     }
+    namespace 'com.thelumierguy.astroadventures'
 }
 
 dependencies {
