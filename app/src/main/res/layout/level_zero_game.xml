@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.thelumierguy.astroadventures.ui.game.views.bullets.BulletView
+    <com.roy.ui.game.views.bullets.BulletView
         android:id="@+id/bulletView"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -15,7 +15,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scoreView" />
 
-    <com.thelumierguy.astroadventures.ui.game.views.drops.DropsView
+    <com.roy.ui.game.views.drops.DropsView
         android:id="@+id/dropsView"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -40,7 +40,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="1235" />
 
-    <com.thelumierguy.astroadventures.ui.game.views.bullets.BulletCountView
+    <com.roy.ui.game.views.bullets.BulletCountView
         android:id="@+id/ammoCountView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
         tools:text="1235" />
 
 
-    <com.thelumierguy.astroadventures.ui.game.views.enemyShip.EnemyClusterView
+    <com.roy.ui.game.views.enemyShip.EnemyClusterView
         android:id="@+id/enemiesView"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -72,7 +72,7 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.67" />
 
-    <com.thelumierguy.astroadventures.ui.game.views.playership.SpaceShipView
+    <com.roy.ui.game.views.playership.SpaceShipView
         android:id="@+id/spaceShipView"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -83,7 +83,7 @@
         app:processAccelerometer="false" />
 
 
-    <com.thelumierguy.astroadventures.ui.game.views.instructions.InstructionsView
+    <com.roy.ui.game.views.instructions.InstructionsView
         android:id="@+id/dialogView"
         android:layout_width="0dp"
         android:layout_height="150dp"
@@ -105,7 +105,7 @@
         tools:visibility="gone" />
 
 
-    <com.thelumierguy.astroadventures.ui.game.views.instructions.BlinkingTextView
+    <com.roy.ui.game.views.instructions.BlinkingTextView
         android:id="@+id/tv_blinking"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -127,7 +127,7 @@
         tools:visibility="visible" />
 
 
-    <com.thelumierguy.astroadventures.ui.game.views.playerhealth.PlayerHealthView
+    <com.roy.ui.game.views.playerhealth.PlayerHealthView
         android:id="@+id/healthView"
         android:layout_width="0dp"
         android:layout_height="0dp"

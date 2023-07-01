@@ -18,9 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GalagaTest">
         <activity
-            android:name="com.thelumierguy.astroadventures.ui.MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
+<!--            //TODO fix crash portrait android 8-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="1235" />
 
-    <com.thelumierguy.astroadventures.ui.game.views.containerview.ContainerView
+    <com.roy.ui.game.views.containerview.ContainerView
         android:id="@+id/container_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -29,7 +29,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scoreView">
 
-        <com.thelumierguy.astroadventures.ui.game.views.bullets.BulletView
+        <com.roy.ui.game.views.bullets.BulletView
             android:id="@+id/bulletView"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -38,7 +38,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.thelumierguy.astroadventures.ui.game.views.drops.DropsView
+        <com.roy.ui.game.views.drops.DropsView
             android:id="@+id/dropsView"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -47,7 +47,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.thelumierguy.astroadventures.ui.game.views.enemyShip.EnemyClusterView
+        <com.roy.ui.game.views.enemyShip.EnemyClusterView
             android:id="@+id/enemiesView"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -63,7 +63,7 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.92" />
 
-        <com.thelumierguy.astroadventures.ui.game.views.playership.SpaceShipView
+        <com.roy.ui.game.views.playership.SpaceShipView
             android:id="@+id/spaceShipView"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -72,9 +72,9 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
 
-    </com.thelumierguy.astroadventures.ui.game.views.containerview.ContainerView>
+    </com.roy.ui.game.views.containerview.ContainerView>
 
-    <com.thelumierguy.astroadventures.ui.game.views.bullets.BulletCountView
+    <com.roy.ui.game.views.bullets.BulletCountView
         android:id="@+id/ammoCountView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
         tools:text="1235" />
 
 
-    <com.thelumierguy.astroadventures.ui.game.views.playerhealth.PlayerHealthView
+    <com.roy.ui.game.views.playerhealth.PlayerHealthView
         android:id="@+id/healthView"
         android:layout_width="0dp"
         android:layout_height="0dp"
