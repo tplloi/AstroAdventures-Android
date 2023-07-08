@@ -10,13 +10,11 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-
 class BlinkingTextView @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null,
     defStyle: Int = 0,
 ) : AppCompatTextView(context, attributeSet, defStyle) {
-
 
     private val blinkAnimation by lazy {
         AlphaAnimation(0.0f, 1.0f).apply {
@@ -26,7 +24,6 @@ class BlinkingTextView @JvmOverloads constructor(
             repeatCount = Animation.INFINITE
         }
     }
-
 
     fun startBlinking() {
         MainScope().launch {

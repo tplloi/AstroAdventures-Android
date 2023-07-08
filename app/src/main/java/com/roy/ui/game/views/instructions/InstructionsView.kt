@@ -2,7 +2,11 @@ package com.roy.ui.game.views.instructions
 
 import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Path
+import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -14,28 +18,26 @@ import com.roy.R
 import com.roy.utils.scaleToOriginal
 import com.roy.utils.scaleView
 
-
 class InstructionsView @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null,
     defStyle: Int = 0,
 ) : AppCompatTextView(context, attributeSet, defStyle) {
 
-
     init {
         setOnTouchListener(CustomOnTouchListenerImpl(-0.2F))
     }
 
     private val borderThickness = 10F
-
     private val chatBubblePaint = Paint().apply {
-        color = ResourcesCompat.getColor(context.resources,
-            R.color.primaryFontColor,
-            null)
+        color = ResourcesCompat.getColor(
+            /* res = */ context.resources,
+            /* id = */ R.color.primaryFontColor,
+            /* theme = */ null
+        )
         isAntiAlias = false
         isDither = false
     }
-
     private val borderPaint = Paint().apply {
         color = Color.BLACK
         style = Paint.Style.STROKE
@@ -44,29 +46,29 @@ class InstructionsView @JvmOverloads constructor(
         isAntiAlias = false
         isDither = false
     }
-
     private var bubbleArrowEndOffset = 0F
-
     private val chatBubbleRect = RectF()
-
-
     private val bubbleArrowPath = Path()
-
     var bubbleArrowY = 0F
 
-    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+    override fun onSizeChanged(
+        w: Int,
+        h: Int,
+        oldw: Int,
+        oldh: Int,
+    ) {
         super.onSizeChanged(w, h, oldw, oldh)
         bubbleArrowEndOffset = w * 0.1F
         bubbleArrowY = measuredHeight.toFloat() - paddingBottom.toFloat()
-        chatBubbleRect.set(borderThickness,
-            borderThickness,
-            measuredWidth.toFloat() - borderThickness,
-            bubbleArrowY
+        chatBubbleRect.set(
+            /* left = */ borderThickness,
+            /* top = */ borderThickness,
+            /* right = */ measuredWidth.toFloat() - borderThickness,
+            /* bottom = */ bubbleArrowY
         )
     }
 
     private var valueAnimator: ValueAnimator? = null
-
     private var currentTextLength = 0
 
     fun addDialog(text: String) {
@@ -91,17 +93,20 @@ class InstructionsView @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas?) {
         drawBubbleArrow()
         canvas?.drawPath(
-            bubbleArrowPath,
-            chatBubblePaint)
-        canvas?.drawRect(chatBubbleRect,
-            chatBubblePaint)
+            /* path = */ bubbleArrowPath,
+            /* paint = */ chatBubblePaint
+        )
+        canvas?.drawRect(
+            /* rect = */ chatBubbleRect,
+            /* paint = */ chatBubblePaint
+        )
         drawBorder()
         canvas?.drawPath(
-            bubbleArrowPath,
-            borderPaint)
+            /* path = */ bubbleArrowPath,
+            /* paint = */ borderPaint
+        )
         super.onDraw(canvas)
     }
-
 
     private fun drawBorder() {
         bubbleArrowPath.reset()
@@ -109,8 +114,10 @@ class InstructionsView @JvmOverloads constructor(
             moveTo(0F, 0F)
             lineTo(0F, bubbleArrowY)
             lineTo(measuredWidth - paddingBottom - bubbleArrowEndOffset, bubbleArrowY)
-            lineTo(measuredWidth - bubbleArrowEndOffset,
-                measuredHeight.toFloat())
+            lineTo(
+                measuredWidth - bubbleArrowEndOffset,
+                measuredHeight.toFloat()
+            )
             lineTo(measuredWidth - bubbleArrowEndOffset, bubbleArrowY)
             lineTo(measuredWidth.toFloat(), bubbleArrowY)
             lineTo(measuredWidth.toFloat(), 0F)
@@ -122,26 +129,32 @@ class InstructionsView @JvmOverloads constructor(
         bubbleArrowPath.reset()
         bubbleArrowPath.apply {
             moveTo(measuredWidth - bubbleArrowEndOffset, bubbleArrowY)
-            lineTo(measuredWidth - bubbleArrowEndOffset,
-                measuredHeight.toFloat())
+            lineTo(
+                measuredWidth - bubbleArrowEndOffset,
+                measuredHeight.toFloat()
+            )
 
-            lineTo(measuredWidth - paddingBottom - bubbleArrowEndOffset,
-                bubbleArrowY)
+            lineTo(
+                measuredWidth - paddingBottom - bubbleArrowEndOffset,
+                bubbleArrowY
+            )
             close()
         }
     }
 }
 
-
 class CustomOnTouchListenerImpl constructor(private val scaleByVal: Float) : View.OnTouchListener {
 
-
-    override fun onTouch(v: View, event: MotionEvent): Boolean {
+    override fun onTouch(
+        v: View,
+        event: MotionEvent,
+    ): Boolean {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 v.scaleView(scaleByVal)
                 return true
             }
+
             MotionEvent.ACTION_UP -> {
                 v.scaleToOriginal()
                 v.performClick()

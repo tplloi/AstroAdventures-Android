@@ -63,7 +63,7 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.92" />
 
-        <com.roy.ui.game.views.playership.SpaceShipView
+        <com.roy.ui.game.views.playerShip.SpaceShipView
             android:id="@+id/spaceShipView"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -88,7 +88,7 @@
         tools:text="1235" />
 
 
-    <com.roy.ui.game.views.playerhealth.PlayerHealthView
+    <com.roy.ui.game.views.playerHealth.PlayerHealthView
         android:id="@+id/healthView"
         android:layout_width="0dp"
         android:layout_height="0dp"

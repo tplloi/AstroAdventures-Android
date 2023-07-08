@@ -1,4 +1,4 @@
-package com.roy.ui.game.views.playerhealth
+package com.roy.ui.game.views.playerHealth
 
 import android.animation.ValueAnimator
 import android.content.Context
@@ -18,7 +18,6 @@ import kotlin.math.cos
 import kotlin.math.roundToInt
 import kotlin.math.sin
 
-
 class PlayerHealthView constructor(
     context: Context,
     attributeSet: AttributeSet? = null,
@@ -29,8 +28,6 @@ class PlayerHealthView constructor(
             color = Color.parseColor("#DD3D1F")
         }
     }
-
-
     private val circlePaint by lazy {
         Paint().apply {
             color = ResourcesCompat.getColor(context.resources, R.color.shipShadowColor, null)
@@ -38,19 +35,21 @@ class PlayerHealthView constructor(
             style = Paint.Style.STROKE
         }
     }
-
     private val healthProgress by lazy {
         Paint().apply {
             color = Color.parseColor("#DD3D1F")
             style = Paint.Style.STROKE
             strokeWidth = measuredHeight / 4F
             if (isHardwareAccelerated)
-                setShadowLayer(12F, 0F, 0F, color)
+                setShadowLayer(
+                    /* radius = */ 12F,
+                    /* dx = */ 0F,
+                    /* dy = */ 0F,
+                    /* shadowColor = */ color
+                )
         }
     }
-
     var onHealthEmpty: (() -> Unit)? = null
-
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
@@ -60,18 +59,23 @@ class PlayerHealthView constructor(
 
     var progressLength = 0F
 
-    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+    override fun onSizeChanged(
+        w: Int,
+        h: Int,
+        oldw: Int,
+        oldh: Int,
+    ) {
         super.onSizeChanged(w, h, oldw, oldh)
         progressLength = map(
-            com.roy.data.PlayerHealthInfo.getPlayerHealthValue(),
-            0,
-            MAX_HEALTH,
-            measuredHeight,
-            measuredWidth)
+            value = com.roy.data.PlayerHealthInfo.getPlayerHealthValue(),
+            in_min = 0,
+            in_max = MAX_HEALTH,
+            out_min = measuredHeight,
+            out_max = measuredWidth
+        )
     }
 
     private var valueAnimator: ValueAnimator? = null
-
 
     private fun startObservingHealth() {
         lifeCycleOwner.customViewLifeCycleScope.launchWhenCreated {
@@ -80,7 +84,13 @@ class PlayerHealthView constructor(
                     if (life <= 0) {
                         onHealthEmpty?.invoke()
                     }
-                    val progress = map(life, 0, MAX_HEALTH, measuredHeight, measuredWidth)
+                    val progress = map(
+                        value = life,
+                        in_min = 0,
+                        in_max = MAX_HEALTH,
+                        out_min = measuredHeight,
+                        out_max = measuredWidth
+                    )
                     animateProgress(progress)
                 }
             }
@@ -106,13 +116,20 @@ class PlayerHealthView constructor(
         }
     }
 
-
     override fun onDraw(canvas: Canvas?) {
         val radius = measuredHeight / 2F
-        canvas?.drawCircle(radius + paddingLeft, radius + paddingTop, radius, circlePaint)
+        canvas?.drawCircle(
+            /* cx = */ radius + paddingLeft,
+            /* cy = */ radius + paddingTop,
+            /* radius = */ radius,
+            /* paint = */ circlePaint
+        )
         canvas?.drawLine(measuredHeight.toFloat(), radius, progressLength, radius, healthProgress)
-        val path = createHeartPath(2 * (radius.roundToInt() + paddingLeft), measuredHeight)
-        canvas?.drawPath(path, heartPaint)
+        val path = createHeartPath(
+            width = 2 * (radius.roundToInt() + paddingLeft),
+            height = measuredHeight
+        )
+        canvas?.drawPath(/* path = */ path, /* paint = */ heartPaint)
     }
 
     private fun createHeartPath(width: Int, height: Int): Path {
@@ -132,7 +149,7 @@ class PlayerHealthView constructor(
         //left mid point
         val midPointLeftX = bottomPointX + midPointLength * cos(Math.toRadians(angle))
         val midPointLeftY = bottomPointY + midPointLength * sin(Math.toRadians(angle))
-        path.lineTo(midPointLeftX.toFloat(), midPointLeftY.toFloat())
+        path.lineTo(/* x = */ midPointLeftX.toFloat(), /* y = */ midPointLeftY.toFloat())
 
         angle = 220.0
 
@@ -149,10 +166,10 @@ class PlayerHealthView constructor(
         val topLeftPointY = bottomPointY + topSidePointLength * sin(Math.toRadians(angle))
 
         path.quadTo(
-            controlPointLeftX.toFloat(),
-            controlPointLeftY.toFloat(),
-            topLeftPointX.toFloat(),
-            topLeftPointY.toFloat()
+            /* x1 = */ controlPointLeftX.toFloat(),
+            /* y1 = */ controlPointLeftY.toFloat(),
+            /* x2 = */ topLeftPointX.toFloat(),
+            /* y2 = */ topLeftPointY.toFloat()
         )
 
         //top control point left
@@ -162,15 +179,14 @@ class PlayerHealthView constructor(
 
         val controlPointTopX = width / 2 - offsetXControlPoint
 
-
         //mid point top
         val midTopX = width / 2F
         val midTopY = height * 0.3F
         path.quadTo(
-            controlPointTopX,
-            offsetYControlPoint,
-            midTopX,
-            midTopY
+            /* x1 = */ controlPointTopX,
+            /* y1 = */ offsetYControlPoint,
+            /* x2 = */ midTopX,
+            /* y2 = */ midTopY
         )
         //back to start
         path.lineTo(bottomPointX, bottomPointY)
@@ -198,22 +214,21 @@ class PlayerHealthView constructor(
         val topRightPointY = bottomPointY + topSidePointLength * sin(Math.toRadians(angle))
 
         path.quadTo(
-            controlPointRightX.toFloat(),
-            controlPointRightY.toFloat(),
-            topRightPointX.toFloat(),
-            topRightPointY.toFloat()
+            /* x1 = */ controlPointRightX.toFloat(),
+            /* y1 = */ controlPointRightY.toFloat(),
+            /* x2 = */ topRightPointX.toFloat(),
+            /* y2 = */ topRightPointY.toFloat()
         )
 
         //top control point right
 
         val controlPointTopXRight = width / 2 + offsetXControlPoint
 
-
         path.quadTo(
-            controlPointTopXRight,
-            offsetYControlPoint,
-            midTopX,
-            midTopY
+            /* x1 = */ controlPointTopXRight,
+            /* y1 = */ offsetYControlPoint,
+            /* x2 = */ midTopX,
+            /* y2 = */ midTopY
         )
 
         return path

@@ -1,7 +1,12 @@
-package com.roy.ui.game.views.playership
+package com.roy.ui.game.views.playerShip
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Path
+import android.graphics.Picture
+import android.graphics.Rect
 import android.graphics.drawable.PictureDrawable
 import android.hardware.SensorEvent
 import android.util.AttributeSet
@@ -19,8 +24,10 @@ import com.roy.utils.map
 import java.util.*
 import kotlin.math.roundToInt
 
-
-class SpaceShipView(context: Context, attributeSet: AttributeSet? = null) :
+class SpaceShipView(
+    context: Context,
+    attributeSet: AttributeSet? = null,
+) :
     BaseCustomView(context, attributeSet), com.roy.data.RigidBodyObject {
 
     var onCollisionCallBack: OnCollisionCallBack? = null
@@ -33,25 +40,19 @@ class SpaceShipView(context: Context, attributeSet: AttributeSet? = null) :
         com.roy.data.CollisionDetector(lifeCycleOwner)
 
     private var accelerometerManager: AccelerometerManager? = null
-
     lateinit var bulletStore: com.roy.data.BulletStore
-
     private var currentShipPosition: Float = 0F
-
     private val bodyPaint = Paint().apply {
         color = Color.parseColor("#DEDEDE")
         isAntiAlias = false
         isDither = false
     }
-
     private val bodyPaintStroke = Paint().apply {
         color = Color.parseColor("#DEDEDE")
         style = Paint.Style.STROKE
         isAntiAlias = false
         isDither = false
     }
-
-
     private val wingsPaintOutline = Paint().apply {
         color = Color.parseColor("#0069DE")
         style = Paint.Style.STROKE
@@ -59,43 +60,38 @@ class SpaceShipView(context: Context, attributeSet: AttributeSet? = null) :
         isAntiAlias = false
         isDither = false
     }
-
     private val jetPaint = Paint().apply {
         color = Color.parseColor("#F24423")
         isAntiAlias = false
         strokeWidth = 8F
         isDither = false
-        setShadowLayer(10F, 0F, 10F, Color.MAGENTA)
+        setShadowLayer(/* radius = */ 10F, /* dx = */
+            0F, /* dy = */
+            10F, /* shadowColor = */
+            Color.MAGENTA
+        )
     }
-
     private var streamLinedTopPoint = 0f
     private var bodyTopPoint = 0f
     private var wingWidth = 0F
     private var halfWidth = 0F
     private var halfHeight = 0F
     private var missileSize = 0F
-
     private lateinit var spaceShipPicture: Picture
-
     private lateinit var pictureDrawable: PictureDrawable
-
     private var gravityValue = FloatArray(1)
-
     private var translationXValue = 0F
-
     private val hapticService by lazy { HapticService(context) }
-
     private var displayRect = Rect()
-
     var processAccelerometerValues = true
 
     init {
         setLayerType(LAYER_TYPE_HARDWARE, null)
         context.theme.obtainStyledAttributes(
-            attributeSet,
-            R.styleable.SpaceShipView,
-            0, 0).apply {
-
+            /* set = */ attributeSet,
+            /* attrs = */ R.styleable.SpaceShipView,
+            /* defStyleAttr = */ 0, /* defStyleRes = */ 0
+        ).apply {
             try {
                 processAccelerometerValues =
                     getBoolean(R.styleable.SpaceShipView_processAccelerometer, true)
@@ -118,9 +114,7 @@ class SpaceShipView(context: Context, attributeSet: AttributeSet? = null) :
 
         }
         spaceShipPicture.endRecording()
-
         pictureDrawable = PictureDrawable(spaceShipPicture)
-
         postInvalidate()
     }
 
@@ -139,7 +133,12 @@ class SpaceShipView(context: Context, attributeSet: AttributeSet? = null) :
         }
     }
 
-    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+    override fun onSizeChanged(
+        w: Int,
+        h: Int,
+        oldw: Int,
+        oldh: Int,
+    ) {
         super.onSizeChanged(w, h, oldw, oldh)
         halfWidth = w / 2F
         getDrawingRect(displayRect)
@@ -149,34 +148,40 @@ class SpaceShipView(context: Context, attributeSet: AttributeSet? = null) :
         bodyTopPoint = h / 3F
         wingWidth = w / 15F
         missileSize = h / 8F
-        mainBodyYRange = Range(top + streamLinedTopPoint, (top + halfHeight + bodyTopPoint) - missileSize)
+        mainBodyYRange =
+            Range(
+                /* lower = */ top + streamLinedTopPoint,
+                /* upper = */ (top + halfHeight + bodyTopPoint) - missileSize
+            )
         wingsYRange =
-            Range((top + halfHeight + bodyTopPoint) - missileSize, top + halfHeight + bodyTopPoint)
+            Range(
+                /* lower = */ (top + halfHeight + bodyTopPoint) - missileSize,
+                /* upper = */top + halfHeight + bodyTopPoint
+            )
         initPicture()
     }
 
     private fun drawStreamlinedBody(it: Canvas) {
         bodyPaintStroke.strokeWidth = 10F
         it.drawLine(
-            halfWidth,
-            streamLinedTopPoint,
-            halfWidth,
-            measuredHeight - streamLinedTopPoint,
-            bodyPaintStroke
+            /* startX = */ halfWidth,
+            /* startY = */ streamLinedTopPoint,
+            /* stopX = */ halfWidth,
+            /* stopY = */ measuredHeight - streamLinedTopPoint,
+            /* paint = */ bodyPaintStroke
         )
     }
-
 
     fun getShipX() = currentShipPosition
 
     private fun drawBody(it: Canvas) {
         bodyPaintStroke.strokeWidth = 24F
         it.drawLine(
-            halfWidth,
-            bodyTopPoint,
-            halfWidth,
-            measuredHeight - bodyTopPoint,
-            bodyPaintStroke
+            /* startX = */ halfWidth,
+            /* startY = */ bodyTopPoint,
+            /* stopX = */ halfWidth,
+            /* stopY = */ measuredHeight - bodyTopPoint,
+            /* paint = */ bodyPaintStroke
         )
     }
 
@@ -196,45 +201,44 @@ class SpaceShipView(context: Context, attributeSet: AttributeSet? = null) :
         canvas.drawMissile(startX, startY)
     }
 
-
     private fun drawExhaust(canvas: Canvas) {
         val path = Path()
 
         val topPoint = halfHeight + streamLinedTopPoint / 2
 
         path.moveTo(
-            halfWidth,
-            topPoint
+            /* x = */ halfWidth,
+            /* y = */ topPoint
         ) // Top
 
         path.lineTo(
-            halfWidth - wingWidth / 10,
-            topPoint
+            /* x = */ halfWidth - wingWidth / 10,
+            /* y = */ topPoint
         )
 
         path.lineTo(
-            halfWidth - wingWidth / 5,
-            halfHeight + streamLinedTopPoint
+            /* x = */ halfWidth - wingWidth / 5,
+            /* y = */ halfHeight + streamLinedTopPoint
         )
 
         path.lineTo(
-            halfWidth,
-            measuredHeight - bodyTopPoint
+            /* x = */ halfWidth,
+            /* y = */ measuredHeight - bodyTopPoint
         )
 
         path.moveTo(
-            halfWidth + wingWidth / 10,
-            topPoint
+            /* x = */ halfWidth + wingWidth / 10,
+            /* y = */ topPoint
         ) // Top
 
         path.lineTo(
-            halfWidth + wingWidth / 5,
-            halfHeight + streamLinedTopPoint
+            /* x = */ halfWidth + wingWidth / 5,
+            /* y = */ halfHeight + streamLinedTopPoint
         )
 
         path.lineTo(
-            halfWidth,
-            measuredHeight - bodyTopPoint
+            /* x = */ halfWidth,
+            /* y = */ measuredHeight - bodyTopPoint
         )
 
         path.close()
@@ -244,14 +248,13 @@ class SpaceShipView(context: Context, attributeSet: AttributeSet? = null) :
 
     private fun Canvas.drawMissile(startX: Float, startY: Float) {
         drawLine(
-            startX,
-            startY,
-            startX,
-            startY - missileSize,
-            jetPaint
+            /* startX = */ startX,
+            /* startY = */ startY,
+            /* stopX = */ startX,
+            /* stopY = */ startY - missileSize,
+            /* paint = */ jetPaint
         )
     }
-
 
     private fun drawShipWings(canvas: Canvas) {
         val path = Path()
@@ -259,25 +262,24 @@ class SpaceShipView(context: Context, attributeSet: AttributeSet? = null) :
         path.moveTo(halfWidth, halfHeight - bodyTopPoint / 3) // Top
 
         path.lineTo(
-            halfWidth - wingWidth,
-            halfHeight + bodyTopPoint
+            /* x = */ halfWidth - wingWidth,
+            /* y = */ halfHeight + bodyTopPoint
         ) // Left
 
         path.lineTo(
-            halfWidth,
-            halfHeight + streamLinedTopPoint / 2
+            /* x = */ halfWidth,
+            /* y = */ halfHeight + streamLinedTopPoint / 2
         ) // Return to mid
 
         path.lineTo(
-            halfWidth + wingWidth,
-            halfHeight + bodyTopPoint
+            /* x = */ halfWidth + wingWidth,
+            /* y = */ halfHeight + bodyTopPoint
         ) // Right
 
         path.close()
 
         canvas.drawPath(path, bodyPaint)
         canvas.drawPath(path, wingsPaintOutline)
-
     }
 
     fun getShipY(): Float = bodyTopPoint
@@ -298,22 +300,28 @@ class SpaceShipView(context: Context, attributeSet: AttributeSet? = null) :
     }
 
     private fun processValues() {
-        translationXValue = map(gravityValue[0], 6F, -6F, -wingWidth, measuredWidth + wingWidth)
+        translationXValue = map(
+            value = gravityValue[0],
+            in_min = 6F,
+            in_max = -6F,
+            out_min = -wingWidth,
+            out_max = measuredWidth + wingWidth
+        )
         if (translationXValue > wingWidth && translationXValue < measuredWidth - wingWidth) {
             currentShipPosition = translationXValue
-            mainBodyXRange = Range(currentShipPosition - 24,
-                currentShipPosition + 24)
+            mainBodyXRange = Range(
+                currentShipPosition - 24,
+                currentShipPosition + 24
+            )
 
             leftWingsXRange = Range(currentShipPosition - wingWidth, mainBodyXRange.lower)
-
             rightWingsXRange = Range(mainBodyXRange.upper, currentShipPosition + wingWidth)
 
-
             displayRect.set(
-                (translationXValue - halfWidth).roundToInt(),
-                0,
-                (translationXValue + halfWidth).roundToInt(),
-                measuredHeight
+                /* left = */ (translationXValue - halfWidth).roundToInt(),
+                /* top = */ 0,
+                /* right = */ (translationXValue + halfWidth).roundToInt(),
+                /* bottom = */ measuredHeight
             )
             invalidate()
         }
@@ -336,7 +344,6 @@ class SpaceShipView(context: Context, attributeSet: AttributeSet? = null) :
     private var rightWingsXRange = Range(0F, 0F)
     private var wingsYRange = Range(0F, 0F)
 
-
     override fun checkCollision(
         softBodyObjectData: SoftBodyObjectData,
     ) {
@@ -350,14 +357,13 @@ class SpaceShipView(context: Context, attributeSet: AttributeSet? = null) :
 
                 if (wingsYRange.contains(softBodyPosition.y))
                     if (leftWingsXRange.contains(
-                            softBodyPosition.x) || rightWingsXRange.contains(softBodyPosition.x)
+                            softBodyPosition.x
+                        ) || rightWingsXRange.contains(softBodyPosition.x)
                     ) {
                         onPlayerHit(softBodyObject)
                     }
 
-
             }
-
         }
     }
 
@@ -368,6 +374,7 @@ class SpaceShipView(context: Context, attributeSet: AttributeSet? = null) :
                 hapticService.performHapticFeedback(64, 48)
                 com.roy.data.PlayerHealthInfo.onHit()
             }
+
             is SoftBodyObjectType.DROP -> {
                 when (softBodyObject.objectType.dropType) {
                     is DropType.Ammo -> {
@@ -398,8 +405,4 @@ class SpaceShipView(context: Context, attributeSet: AttributeSet? = null) :
     var onHitCallBack: () -> Unit = {}
 
     var onAmmoCollectedCallback: () -> Unit = {}
-}
-
-interface LevelZeroCallBackPlayer {
-    fun onTilted()
 }
