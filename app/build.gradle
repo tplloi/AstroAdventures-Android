@@ -10,8 +10,8 @@ android {
         applicationId "com.roy93group.astroadventures"
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode 20230701
-        versionName "2023.07.01"
+        versionCode 20230708
+        versionName "2023.07.08"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
