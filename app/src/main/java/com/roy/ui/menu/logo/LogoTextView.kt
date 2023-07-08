@@ -24,7 +24,12 @@ class LogoTextView @JvmOverloads constructor(
             isAntiAlias = false
             color = Color.parseColor("#E4962B")
             if (isHardwareAccelerated)
-                setShadowLayer(12F, 0F, 0F, color)
+                setShadowLayer(
+                    /* radius = */ 12F,
+                    /* dx = */0F,
+                    /* dy = */0F,
+                    /* shadowColor = */color
+                )
         }
     }
     private val logoPathHandlerList: MutableList<LogoPathHandler> = mutableListOf()
@@ -39,12 +44,12 @@ class LogoTextView @JvmOverloads constructor(
         logoPathHandlerList.clear()
         logoPathHandlerList.add(
             LogoPathHandler(
-            measuredWidth = w.toFloat(),
-            measuredHeight = h.toFloat(),
-            initialPointX = 0F,
-            initialPointY = 0F,
-            pathLength = w.toFloat()
-        )
+                measuredWidth = w.toFloat(),
+                measuredHeight = h.toFloat(),
+                initialPointX = 0F,
+                initialPointY = 0F,
+                pathLength = w.toFloat()
+            )
         )
         logoPathHandlerList.add(
             LogoPathHandler(

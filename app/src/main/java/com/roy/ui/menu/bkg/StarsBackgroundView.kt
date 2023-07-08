@@ -43,13 +43,11 @@ class StarsBackgroundView(
             )
         }
     }
-
     private val starsList by lazy {
         List(100) {
             Twinkles(height = measuredHeight, width = measuredWidth)
         }
     }
-
     private val trailsList by lazy {
         List(200) {
             Trails(height = measuredHeight, width = measuredWidth)

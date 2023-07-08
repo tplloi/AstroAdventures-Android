@@ -31,58 +31,49 @@ import com.roy.utils.goFullScreen
 import kotlinx.coroutines.Job
 import java.util.*
 
-
 class MainActivity : AppCompatActivity(), SoftBodyObject.SoftBodyObjectTracker, OnCollisionCallBack,
     EnemyDetailsCallback, LevelZeroHelper {
 
     lateinit var binding: ActivityMainBinding
 
     val viewModel by lazy {
-        ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[MainViewModel::class.java]
+        ViewModelProvider(
+            owner = this,
+            factory = ViewModelProvider.NewInstanceFactory()
+        )[MainViewModel::class.java]
     }
 
     lateinit var initScene: SceneContainer<GameInitScreenBinding>
-
     lateinit var levelCompleteScene: SceneContainer<LevelCompleteSceneBinding>
-
     lateinit var levelZeroGameScene: SceneContainer<LevelZeroGameBinding>
-
     lateinit var levelStartWarpScene: SceneContainer<LevelStartWarpSceneBinding>
-
     lateinit var gameMenuScene: SceneContainer<MainMenuSceneBinding>
-
     lateinit var youDiedScene: SceneContainer<YouDiedSceneBinding>
-
     lateinit var gameScene: SceneContainer<GameSceneBinding>
-
     lateinit var levelStartScene: SceneContainer<LevelStartSceneBinding>
-
     lateinit var gameOverScene: SceneContainer<GameOverSceneBinding>
-
     lateinit var highScoreScene: SceneContainer<HighscoresSceneBinding>
-
     val backgroundMusicManager by lazy {
         BackgroundMusicManager(applicationContext).apply {
             lifecycle.addObserver(this)
         }
     }
-
-
-    private val transitionManager by lazy {
-        TransitionManager()
-    }
+    private val transitionManager by lazy { TransitionManager() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         goFullScreen()
         initDataStore(this)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
-            binding.rootContainer.setPadding(0,
-                insets.systemWindowInsetTop,
-                0,
-                insets.systemWindowInsetBottom)
+            binding.rootContainer.setPadding(
+                /* left = */ 0,
+                /* top = */ insets.systemWindowInsetTop,
+                /* right = */ 0,
+                /* bottom = */ insets.systemWindowInsetBottom
+            )
             insets
         }
         initScenes()
@@ -90,36 +81,52 @@ class MainActivity : AppCompatActivity(), SoftBodyObject.SoftBodyObjectTracker, 
     }
 
     private fun initScenes() {
-        initScene =
-            GameInitScreenBinding.inflate(layoutInflater, binding.root, false).let {
-                SceneContainer(it, Scene(binding.rootContainer, it.root))
-            }
+        initScene = GameInitScreenBinding.inflate(layoutInflater, binding.root, false).let {
+            SceneContainer(
+                binding = it,
+                scene = Scene(binding.rootContainer, it.root)
+            )
+        }
 
-        gameMenuScene =
-            MainMenuSceneBinding.inflate(layoutInflater, binding.root, false).let {
-                SceneContainer(it, Scene(binding.rootContainer, it.root))
-            }
+        gameMenuScene = MainMenuSceneBinding.inflate(layoutInflater, binding.root, false).let {
+            SceneContainer(
+                binding = it,
+                scene = Scene(binding.rootContainer, it.root)
+            )
+        }
 
         levelStartScene =
             LevelStartSceneBinding.inflate(layoutInflater, binding.root, false).let {
-                SceneContainer(it, Scene(binding.rootContainer, it.root))
+                SceneContainer(
+                    binding = it,
+                    scene = Scene(binding.rootContainer, it.root)
+                )
             }
 
         youDiedScene =
             YouDiedSceneBinding.inflate(layoutInflater, binding.root, false).let {
-                SceneContainer(it, Scene(binding.rootContainer, it.root))
+                SceneContainer(
+                    binding = it,
+                    scene = Scene(binding.rootContainer, it.root)
+                )
             }
 
         highScoreScene =
             HighscoresSceneBinding.inflate(layoutInflater, binding.root, false).let {
-                SceneContainer(it, Scene(binding.rootContainer, it.root))
+                SceneContainer(
+                    binding = it,
+                    scene = Scene(binding.rootContainer, it.root)
+                )
             }
 
         resetGameScene()
 
         gameOverScene =
             GameOverSceneBinding.inflate(layoutInflater, binding.root, false).let {
-                SceneContainer(it, Scene(binding.rootContainer, it.root))
+                SceneContainer(
+                    binding = it,
+                    scene = Scene(binding.rootContainer, it.root)
+                )
             }
     }
 
@@ -131,8 +138,10 @@ class MainActivity : AppCompatActivity(), SoftBodyObject.SoftBodyObjectTracker, 
         }
     }
 
-
-    override fun cancelTracking(bulletId: UUID, sender: BulletView.Sender) {
+    override fun cancelTracking(
+        bulletId: UUID,
+        sender: BulletView.Sender,
+    ) {
         if (sender == BulletView.Sender.PLAYER) {
             gameScene.binding.spaceShipView.removeSoftBodyEntry(bulletId)
         } else {
@@ -156,33 +165,55 @@ class MainActivity : AppCompatActivity(), SoftBodyObject.SoftBodyObjectTracker, 
         viewModel.updateUIState(ScreenStates.LevelComplete(ammoCount))
     }
 
-    override fun onCanonReady(enemyX: Float, enemyY: Float) {
-        gameScene.binding.bulletView.fire(enemyX, enemyY, BulletView.Sender.ENEMY)
+    override fun onCanonReady(
+        enemyX: Float,
+        enemyY: Float,
+    ) {
+        gameScene.binding.bulletView.fire(
+            x = enemyX,
+            y = enemyY,
+            sender = BulletView.Sender.ENEMY
+        )
     }
 
-    override fun hasDrop(enemyX: Float, enemyY: Float) {
-        gameScene.binding.dropsView.dropGift(enemyX, enemyY)
+    override fun hasDrop(
+        enemyX: Float,
+        enemyY: Float,
+    ) {
+        gameScene.binding.dropsView.dropGift(x = enemyX, y = enemyY)
     }
 
     fun resetGameScene() {
         binding.rootContainer.removeAllViews()
         levelCompleteScene =
             LevelCompleteSceneBinding.inflate(layoutInflater, binding.root, false).let {
-                SceneContainer(it, Scene(binding.rootContainer, it.root))
+                SceneContainer(
+                    binding = it,
+                    scene = Scene(binding.rootContainer, it.root)
+                )
             }
 
         levelZeroGameScene =
             LevelZeroGameBinding.inflate(layoutInflater, binding.root, false).let {
-                SceneContainer(it, Scene(binding.rootContainer, it.root))
+                SceneContainer(
+                    binding = it,
+                    scene = Scene(binding.rootContainer, it.root)
+                )
             }
 
         levelStartWarpScene =
             LevelStartWarpSceneBinding.inflate(layoutInflater, binding.root, false).let {
-                SceneContainer(it, Scene(binding.rootContainer, it.root))
+                SceneContainer(
+                    binding = it,
+                    scene = Scene(binding.rootContainer, it.root)
+                )
             }
 
         gameScene = GameSceneBinding.inflate(layoutInflater, binding.root, false).let {
-            SceneContainer(it, Scene(binding.rootContainer, it.root))
+            SceneContainer(
+                binding = it,
+                scene = Scene(binding.rootContainer, it.root)
+            )
         }.apply {
             binding.apply {
                 bulletView.softBodyObjectTracker = this@MainActivity
@@ -201,16 +232,31 @@ class MainActivity : AppCompatActivity(), SoftBodyObject.SoftBodyObjectTracker, 
         viewModel.updateUIState(ScreenStates.YouDied)
     }
 
-    fun transitionFromTo(fromScene: Scene, toScene: Scene, transition: Transition) {
-        transitionManager.setTransition(fromScene, toScene, transition)
+    fun transitionFromTo(
+        fromScene: Scene,
+        toScene: Scene,
+        transition: Transition,
+    ) {
+        transitionManager.setTransition(
+            /* fromScene = */ fromScene,
+            /* toScene = */toScene,
+            /* transition = */transition
+        )
         transitionManager.transitionTo(toScene)
     }
 
-    fun transitionTo(toScene: Scene, transition: Transition) {
-        transitionManager.setTransition(toScene, transition)
+    fun transitionTo(
+        toScene: Scene,
+        transition: Transition,
+    ) {
+        transitionManager.setTransition(
+            /* scene = */ toScene,
+            /* transition = */ transition
+        )
         transitionManager.transitionTo(toScene)
     }
 
+    //TODO migrate onBackPressed
     override fun onBackPressed() {
         when (viewModel.observeScreenState().value) {
             ScreenStates.GameMenu -> finish()

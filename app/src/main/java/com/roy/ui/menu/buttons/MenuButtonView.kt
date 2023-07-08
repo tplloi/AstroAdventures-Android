@@ -72,8 +72,13 @@ class MenuButtonView @JvmOverloads constructor(
         )
         canvas?.drawRect(boxRect, cornerPaint)
 
-        boxRect.set(0F, measuredHeight - cornerSize, cornerSize, measuredHeight.toFloat())
-        canvas?.drawRect(boxRect, cornerPaint)
+        boxRect.set(
+            /* left = */ 0F,
+            /* top = */measuredHeight - cornerSize,
+            /* right = */cornerSize,
+            /* bottom = */measuredHeight.toFloat()
+        )
+        canvas?.drawRect(/* rect = */ boxRect, /* paint = */ cornerPaint)
 
     }
 }

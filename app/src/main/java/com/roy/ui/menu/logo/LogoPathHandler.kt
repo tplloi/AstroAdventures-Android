@@ -11,9 +11,8 @@ class LogoPathHandler(
     private val pathLength: Float,
 ) {
 
-    var segments: Int = 1
-
-    var drawPath = Path()
+    private var segments: Int = 1
+    private var drawPath = Path()
 
     fun startDrawingPath(invalidate: (Path) -> Unit) {
         drawPath.reset()
@@ -55,7 +54,7 @@ class LogoPathHandler(
         drawLength: Float,
     ) {
         segments = 1
-        val direction = getDirectionForPath(startX, startY)
+        val direction = getDirectionForPath(startX = startX, startY = startY)
         val maxLength = getMaxLength(direction)
         if (segments == 1) {
             when (direction) {
