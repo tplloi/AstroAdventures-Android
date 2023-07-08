@@ -1,4 +1,4 @@
-package com.roy.ui.menu.views.scoreview
+package com.roy.ui.menu.views.scoreView
 
 import android.animation.Animator
 import android.animation.ValueAnimator
@@ -7,7 +7,6 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 import kotlin.math.roundToInt
 
-
 class AnimatedTextView @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null,
@@ -15,7 +14,6 @@ class AnimatedTextView @JvmOverloads constructor(
 ) : AppCompatTextView(context, attributeSet, defStyle) {
 
     var initialValue: Float = 0F
-
 
     fun addNewValue(finalValue: Float, onEnd: () -> Unit = {}) {
         val valueAnimator = ValueAnimator.ofFloat(initialValue, finalValue)
@@ -29,7 +27,12 @@ class AnimatedTextView @JvmOverloads constructor(
         valueAnimator.addListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator) {
                 paint.apply {
-                    setShadowLayer(12F, 0F, 0F, textColors.defaultColor)
+                    setShadowLayer(
+                        /* radius = */ 12F,
+                        /* dx = */ 0F,
+                        /* dy = */ 0F,
+                        /* shadowColor = */ textColors.defaultColor
+                    )
                 }
             }
 

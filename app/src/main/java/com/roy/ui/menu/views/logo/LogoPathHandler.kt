@@ -4,11 +4,11 @@ import android.graphics.Path
 import kotlin.math.abs
 
 class LogoPathHandler(
-    val measuredWidth: Float,
+    private val measuredWidth: Float,
     val measuredHeight: Float,
     var initialPointX: Float,
     var initialPointY: Float,
-    val pathLength: Float,
+    private val pathLength: Float,
 ) {
 
     var segments: Int = 1
@@ -17,30 +17,43 @@ class LogoPathHandler(
 
     fun startDrawingPath(invalidate: (Path) -> Unit) {
         drawPath.reset()
-        drawPath.moveTo(initialPointX, initialPointY)
-        drawPath(drawPath, initialPointX, initialPointY, pathLength)
+        drawPath.moveTo(/* x = */ initialPointX, /* y = */ initialPointY)
+        drawPath(
+            drawPath = drawPath,
+            startX = initialPointX,
+            startY = initialPointY,
+            drawLength = pathLength
+        )
         translateAhead()
         invalidate(drawPath)
     }
 
     private fun translateAhead() {
-        when (getDirectionForPath(initialPointX, initialPointY)) {
+        when (getDirectionForPath(startX = initialPointX, startY = initialPointY)) {
             LogoTextView.Direction.Right -> {
                 initialPointX++
             }
+
             LogoTextView.Direction.Down -> {
                 initialPointY++
             }
+
             LogoTextView.Direction.Left -> {
                 initialPointX--
             }
+
             LogoTextView.Direction.UP -> {
                 initialPointY--
             }
         }
     }
 
-    private fun drawPath(drawPath: Path, startX: Float, startY: Float, drawLength: Float) {
+    private fun drawPath(
+        drawPath: Path,
+        startX: Float,
+        startY: Float,
+        drawLength: Float,
+    ) {
         segments = 1
         val direction = getDirectionForPath(startX, startY)
         val maxLength = getMaxLength(direction)
@@ -51,40 +64,63 @@ class LogoPathHandler(
                         val newDrawLength = maxLength - startX
                         drawPath.lineTo(maxLength, startY)
                         segments++
-                        drawPath(drawPath, maxLength, startY, drawLength - newDrawLength)
+                        drawPath(
+                            drawPath = drawPath,
+                            startX = maxLength,
+                            startY = startY,
+                            drawLength = drawLength - newDrawLength
+                        )
                     } else {
-                        drawPath.lineTo(startX + drawLength, startY)
+                        drawPath.lineTo(/* x = */ startX + drawLength, /* y = */ startY)
                     }
 
                 }
+
                 LogoTextView.Direction.Down -> {
                     if (startY + drawLength > maxLength) {
                         val newDrawLength = maxLength - startY
                         drawPath.lineTo(startX, maxLength)
                         segments++
-                        drawPath(drawPath, startX, maxLength, drawLength - newDrawLength)
+                        drawPath(
+                            drawPath = drawPath,
+                            startX = startX,
+                            startY = maxLength,
+                            drawLength = drawLength - newDrawLength
+                        )
                     } else {
-                        drawPath.lineTo(startX, startY + drawLength)
+                        drawPath.lineTo(/* x = */ startX, /* y = */ startY + drawLength)
                     }
                 }
+
                 LogoTextView.Direction.Left -> {
                     if (startX - drawLength < maxLength) {
                         val newLength = abs(startX - drawLength)
                         drawPath.lineTo(maxLength, startY)
                         segments++
-                        drawPath(drawPath, maxLength, startY, newLength)
+                        drawPath(
+                            drawPath = drawPath,
+                            startX = maxLength,
+                            startY = startY,
+                            drawLength = newLength
+                        )
                     } else {
-                        drawPath.lineTo(startX - drawLength, startY)
+                        drawPath.lineTo(/* x = */ startX - drawLength, /* y = */ startY)
                     }
                 }
+
                 LogoTextView.Direction.UP -> {
                     if (startY - drawLength < maxLength) {
                         val newLength = abs(startY - drawLength)
                         drawPath.lineTo(startX, maxLength)
                         segments++
-                        drawPath(drawPath, startX, maxLength, newLength)
+                        drawPath(
+                            drawPath = drawPath,
+                            startX = startX,
+                            startY = maxLength,
+                            drawLength = newLength
+                        )
                     } else {
-                        drawPath.lineTo(startX, startY - drawLength)
+                        drawPath.lineTo(/* x = */ startX, /* y = */ startY - drawLength)
                     }
                 }
             }
@@ -98,20 +134,27 @@ class LogoPathHandler(
         LogoTextView.Direction.UP -> 0F
     }
 
-    private fun getDirectionForPath(startX: Float, startY: Float): LogoTextView.Direction {
+    private fun getDirectionForPath(
+        startX: Float,
+        startY: Float,
+    ): LogoTextView.Direction {
         return when {
             startX == 0F && startY == 0F -> {
                 LogoTextView.Direction.Right
             }
+
             startX >= measuredWidth && startY >= 0F && startY < measuredHeight -> {
                 LogoTextView.Direction.Down
             }
+
             startX > 0F && startX <= measuredWidth && startY >= measuredHeight -> {
                 LogoTextView.Direction.Left
             }
+
             startX <= 0F && startY > 0F && startY <= measuredHeight -> {
                 LogoTextView.Direction.UP
             }
+
             else -> {
                 LogoTextView.Direction.Right
             }

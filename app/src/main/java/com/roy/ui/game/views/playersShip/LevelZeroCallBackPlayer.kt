@@ -1,4 +1,4 @@
-package com.roy.ui.game.views.playerShip
+package com.roy.ui.game.views.playersShip
 
 interface LevelZeroCallBackPlayer {
     fun onTilted()

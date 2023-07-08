@@ -1,4 +1,4 @@
-package com.roy.ui.game.views.playerHealth
+package com.roy.ui.game.views.playersHealth
 
 import android.animation.ValueAnimator
 import android.content.Context

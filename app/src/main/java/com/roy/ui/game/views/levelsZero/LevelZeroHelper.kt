@@ -1,4 +1,4 @@
-package com.roy.ui.game.views.levelZero
+package com.roy.ui.game.views.levelsZero
 
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isInvisible
@@ -20,7 +20,7 @@ import com.roy.ui.game.views.bullets.LevelZeroCallBackBullet
 import com.roy.ui.game.views.enemyShip.EnemyDetailsCallback
 import com.roy.ui.game.views.enemyShip.OnCollisionCallBack
 import com.roy.ui.game.views.instructions.DialogHelper
-import com.roy.ui.game.views.playerShip.LevelZeroCallBackPlayer
+import com.roy.ui.game.views.playersShip.LevelZeroCallBackPlayer
 import com.roy.utils.PLAYER_BULLET_SOUND
 import com.roy.utils.SoundData
 import com.roy.utils.SoundManager

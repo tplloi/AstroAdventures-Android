@@ -22,27 +22,35 @@ class MenuButtonView @JvmOverloads constructor(
     private val cornerSize = 20F
 
     init {
-        val pressedStates = ColorStateList.valueOf(
-            Color.WHITE
-        )
+        val pressedStates = ColorStateList.valueOf(Color.WHITE)
         val contentDrawable = GradientDrawable()
 
-        contentDrawable.setColor(ResourcesCompat.getColor(context.resources,
-            R.color.backgroundColorDark,
-            null))
+        contentDrawable.setColor(
+            ResourcesCompat.getColor(
+                /* res = */ context.resources,
+                /* id = */ R.color.backgroundColorDark,
+                /* theme = */ null
+            )
+        )
 
-        contentDrawable.setStroke(cornerSize.toInt(),Color.BLACK)
+        contentDrawable.setStroke(cornerSize.toInt(), Color.BLACK)
 
-        val rippleDrawable = RippleDrawable(pressedStates, contentDrawable, null)
+        val rippleDrawable = RippleDrawable(
+            /* color = */ pressedStates,
+            /* content = */contentDrawable,
+            /* mask = */null
+        )
         background = rippleDrawable
     }
 
     private val boxRect = RectF()
 
     private val cornerPaint = Paint().apply {
-        color = ResourcesCompat.getColor(context.resources,
-            R.color.backgroundColor,
-            null)
+        color = ResourcesCompat.getColor(
+            /* res = */ context.resources,
+            /* id = */ R.color.backgroundColor,
+            /* theme = */ null
+        )
         isDither = false
         isAntiAlias = false
     }
@@ -50,18 +58,18 @@ class MenuButtonView @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-
-
         boxRect.set(0F, 0F, cornerSize, cornerSize)
         canvas?.drawRect(boxRect, cornerPaint)
 
         boxRect.set(measuredWidth - cornerSize, 0F, measuredWidth.toFloat(), cornerSize)
         canvas?.drawRect(boxRect, cornerPaint)
 
-        boxRect.set(measuredWidth - cornerSize,
-            measuredHeight - cornerSize,
-            measuredWidth.toFloat(),
-            measuredHeight.toFloat())
+        boxRect.set(
+            /* left = */ measuredWidth - cornerSize,
+            /* top = */ measuredHeight - cornerSize,
+            /* right = */ measuredWidth.toFloat(),
+            /* bottom = */ measuredHeight.toFloat()
+        )
         canvas?.drawRect(boxRect, cornerPaint)
 
         boxRect.set(0F, measuredHeight - cornerSize, cornerSize, measuredHeight.toFloat())

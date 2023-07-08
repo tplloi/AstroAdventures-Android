@@ -8,13 +8,11 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 
-
 class LogoTextView @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null,
     defStyle: Int = 0,
 ) : AppCompatTextView(context, attributeSet, defStyle) {
-
 
     private val borderPaint by lazy {
         Paint().apply {
@@ -29,18 +27,32 @@ class LogoTextView @JvmOverloads constructor(
                 setShadowLayer(12F, 0F, 0F, color)
         }
     }
-
     private val logoPathHandlerList: MutableList<LogoPathHandler> = mutableListOf()
 
-    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+    override fun onSizeChanged(
+        w: Int,
+        h: Int,
+        oldw: Int,
+        oldh: Int,
+    ) {
         super.onSizeChanged(w, h, oldw, oldh)
         logoPathHandlerList.clear()
-        logoPathHandlerList.add(LogoPathHandler(w.toFloat(), h.toFloat(), 0F, 0F, w.toFloat()))
-        logoPathHandlerList.add(LogoPathHandler(w.toFloat(),
-            h.toFloat(),
-            w.toFloat(),
-            h.toFloat(),
-            w.toFloat()))
+        logoPathHandlerList.add(LogoPathHandler(
+            measuredWidth = w.toFloat(),
+            measuredHeight = h.toFloat(),
+            initialPointX = 0F,
+            initialPointY = 0F,
+            pathLength = w.toFloat()
+        ))
+        logoPathHandlerList.add(
+            LogoPathHandler(
+                measuredWidth = w.toFloat(),
+                measuredHeight = h.toFloat(),
+                initialPointX = w.toFloat(),
+                initialPointY = h.toFloat(),
+                pathLength = w.toFloat()
+            )
+        )
         if (h != 0)
             borderPaint.pathEffect = CornerPathEffect(12f)
     }
@@ -51,7 +63,6 @@ class LogoTextView @JvmOverloads constructor(
         Left,
         UP
     }
-
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
@@ -67,6 +78,5 @@ class LogoTextView @JvmOverloads constructor(
             postInvalidate()
         }
     }
-
 
 }

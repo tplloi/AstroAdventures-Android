@@ -28,7 +28,6 @@ import com.roy.utils.transitionSet
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
-
 fun MainActivity.observeScreenStates() {
     lifecycleScope.launchWhenCreated {
         viewModel.observeScreenState()
