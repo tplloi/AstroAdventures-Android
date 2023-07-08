@@ -1,14 +1,13 @@
-package com.roy.ui.game.views.enemyShip.enemyshipdelegates
+package com.roy.ui.game.views.enemyShip.enemyShipDelegates
 
 import android.graphics.*
 import com.roy.ui.game.views.enemyShip.EnemyClusterView
 import kotlin.random.Random
 
-
 class TieFighter : IEnemyShip {
 
     private val drawRect = RectF(
-        0F, 0F, 0F, 0F
+        /* left = */ 0F, /* top = */ 0F, /* right = */ 0F, /* bottom = */ 0F
     )
 
     var enemyY = 0F
@@ -36,7 +35,6 @@ class TieFighter : IEnemyShip {
         }
     }
 
-
     private val strokePaint by lazy {
         Paint().apply {
             style = Paint.Style.STROKE
@@ -49,23 +47,38 @@ class TieFighter : IEnemyShip {
         }
     }
 
-
     override fun onHit(enemyLife: Int) {
         paint.alpha = 70 * enemyLife
     }
 
-
     override fun onDraw(canvas: Canvas) {
         drawBridge(canvas)
         drawWings(canvas)
-        canvas.drawCircle(enemyX, enemyY, coreRadius / 2F, paint)
+        canvas.drawCircle(
+            /* cx = */ enemyX,
+            /* cy = */enemyY,
+            /* radius = */coreRadius / 2F,
+            /* paint = */paint
+        )
     }
 
     private fun drawWings(canvas: Canvas?) {
         val yStart = enemyY - coreRadius
         val yEnd = enemyY + coreRadius
-        canvas?.drawLine(enemyX - coreRadius, yStart, enemyX - coreRadius, yEnd, strokePaint)
-        canvas?.drawLine(enemyX + coreRadius, yStart, enemyX + coreRadius, yEnd, strokePaint)
+        canvas?.drawLine(
+            /* startX = */ enemyX - coreRadius,
+            /* startY = */ yStart,
+            /* stopX = */ enemyX - coreRadius,
+            /* stopY = */ yEnd,
+            /* paint = */ strokePaint
+        )
+        canvas?.drawLine(
+            /* startX = */ enemyX + coreRadius,
+            /* startY = */ yStart,
+            /* stopX = */ enemyX + coreRadius,
+            /* stopY = */ yEnd,
+            /* paint = */ strokePaint
+        )
     }
 
     private fun drawBridge(canvas: Canvas?) {
@@ -80,18 +93,21 @@ class TieFighter : IEnemyShip {
         canvas?.drawPath(path, paint)
     }
 
-
     override fun translate(offset: Long) {
         enemyY += EnemyClusterView.speed
-        drawRect.offset(0F, EnemyClusterView.speed)
+        drawRect.offset(/* dx = */ 0F, /* dy = */ EnemyClusterView.speed)
     }
 
-    override fun setInitialSize(boxSize: Float, positionX: Int, positionY: Int) {
+    override fun setInitialSize(
+        boxSize: Float,
+        positionX: Int,
+        positionY: Int,
+    ) {
         drawRect.set(
-            boxSize * positionX,
-            boxSize * positionY,
-            boxSize * (positionX + 1),
-            boxSize * (positionY + 1),
+            /* left = */ boxSize * positionX,
+            /* top = */ boxSize * positionY,
+            /* right = */ boxSize * (positionX + 1),
+            /* bottom = */ boxSize * (positionY + 1),
         )
         enemyX = drawRect.centerX()
         enemyY = drawRect.centerY()

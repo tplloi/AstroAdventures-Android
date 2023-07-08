@@ -1,14 +1,13 @@
-package com.roy.ui.game.views.enemyShip.enemyshipdelegates
+package com.roy.ui.game.views.enemyShip.enemyShipDelegates
 
 import android.graphics.*
 import com.roy.ui.game.views.enemyShip.EnemyClusterView
 import kotlin.random.Random
 
-
 class CapitalShip : IEnemyShip {
 
     private val drawRect = RectF(
-        0F, 0F, 0F, 0F
+        /* left = */ 0F, /* top = */ 0F, /* right = */ 0F, /* bottom = */ 0F
     )
 
     var enemyY = 0F
@@ -55,7 +54,6 @@ class CapitalShip : IEnemyShip {
         strokePaint.alpha = alpha
     }
 
-
     override fun onDraw(canvas: Canvas) {
         drawBody(canvas)
     }
@@ -64,8 +62,8 @@ class CapitalShip : IEnemyShip {
         drawPath.reset()
         val topHeight = coreRadius / 3
         val wingWidth = coreRadius / 2
-        drawWingsAndBody(topHeight, wingWidth, canvas)
-        drawGuns(canvas, wingWidth, topHeight)
+        drawWingsAndBody(topHeight = topHeight, wingWidth = wingWidth, canvas = canvas)
+        drawGuns(canvas = canvas, wingWidth = wingWidth, topHeight = topHeight)
     }
 
     private fun drawGuns(
@@ -73,31 +71,35 @@ class CapitalShip : IEnemyShip {
         wingWidth: Float,
         topHeight: Float,
     ) {
-        canvas.drawLine(enemyX - wingWidth,
-            enemyY - topHeight,
-            enemyX - coreRadius,
-            enemyY - topHeight,
-            strokePaint)
-        canvas.drawLine(enemyX + wingWidth,
-            enemyY - topHeight,
-            enemyX + coreRadius,
-            enemyY - topHeight,
-            strokePaint)
-
         canvas.drawLine(
-            enemyX - coreRadius,
-            enemyY - topHeight,
-            enemyX - coreRadius,
-            enemyY + topHeight,
-            strokePaint
+            /* startX = */ enemyX - wingWidth,
+            /* startY = */ enemyY - topHeight,
+            /* stopX = */ enemyX - coreRadius,
+            /* stopY = */ enemyY - topHeight,
+            /* paint = */ strokePaint
+        )
+        canvas.drawLine(
+            /* startX = */ enemyX + wingWidth,
+            /* startY = */ enemyY - topHeight,
+            /* stopX = */ enemyX + coreRadius,
+            /* stopY = */ enemyY - topHeight,
+            /* paint = */ strokePaint
         )
 
         canvas.drawLine(
-            enemyX + coreRadius,
-            enemyY - topHeight,
-            enemyX + coreRadius,
-            enemyY + topHeight,
-            strokePaint
+            /* startX = */ enemyX - coreRadius,
+            /* startY = */ enemyY - topHeight,
+            /* stopX = */ enemyX - coreRadius,
+            /* stopY = */ enemyY + topHeight,
+            /* paint = */ strokePaint
+        )
+
+        canvas.drawLine(
+            /* startX = */ enemyX + coreRadius,
+            /* startY = */ enemyY - topHeight,
+            /* stopX = */ enemyX + coreRadius,
+            /* stopY = */ enemyY + topHeight,
+            /* paint = */ strokePaint
         )
     }
 
@@ -126,18 +128,21 @@ class CapitalShip : IEnemyShip {
         canvas.drawPath(drawPath, paint)
     }
 
-
     override fun translate(offset: Long) {
         enemyY += EnemyClusterView.speed
-        drawRect.offset(0F, EnemyClusterView.speed)
+        drawRect.offset(/* dx = */ 0F, /* dy = */ EnemyClusterView.speed)
     }
 
-    override fun setInitialSize(boxSize: Float, positionX: Int, positionY: Int) {
+    override fun setInitialSize(
+        boxSize: Float,
+        positionX: Int,
+        positionY: Int,
+    ) {
         drawRect.set(
-            boxSize * positionX,
-            boxSize * positionY,
-            boxSize * (positionX + 1),
-            boxSize * (positionY + 1),
+            /* left = */ boxSize * positionX,
+            /* top = */ boxSize * positionY,
+            /* right = */ boxSize * (positionX + 1),
+            /* bottom = */ boxSize * (positionY + 1),
         )
         enemyX = drawRect.centerX()
         enemyY = drawRect.centerY()

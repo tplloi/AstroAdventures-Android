@@ -3,10 +3,10 @@ package com.roy.ui.game.views.enemyShip
 import android.graphics.Canvas
 import android.util.Range
 import com.roy.data.Score
-import com.roy.ui.game.views.enemyShip.enemyshipdelegates.AlienShip
-import com.roy.ui.game.views.enemyShip.enemyshipdelegates.CapitalShip
-import com.roy.ui.game.views.enemyShip.enemyshipdelegates.IEnemyShip
-import com.roy.ui.game.views.enemyShip.enemyshipdelegates.TieFighter
+import com.roy.ui.game.views.enemyShip.enemyShipDelegates.AlienShip
+import com.roy.ui.game.views.enemyShip.enemyShipDelegates.CapitalShip
+import com.roy.ui.game.views.enemyShip.enemyShipDelegates.IEnemyShip
+import com.roy.ui.game.views.enemyShip.enemyShipDelegates.TieFighter
 import kotlin.random.Random
 
 

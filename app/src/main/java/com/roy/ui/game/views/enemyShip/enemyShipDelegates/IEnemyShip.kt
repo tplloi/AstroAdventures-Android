@@ -1,12 +1,16 @@
-package com.roy.ui.game.views.enemyShip.enemyshipdelegates
+package com.roy.ui.game.views.enemyShip.enemyShipDelegates
 
 import android.graphics.Canvas
 
 interface IEnemyShip {
-        fun onHit(enemyLife: Int)
+    fun onHit(enemyLife: Int)
     fun onDraw(canvas: Canvas)
     fun translate(offset: Long)
-    fun setInitialSize(boxSize: Float, positionX: Int, positionY: Int)
+    fun setInitialSize(
+        boxSize: Float,
+        positionX: Int,
+        positionY: Int,
+    )
     fun getPositionX(): Float
     fun getPositionY(): Float
     fun hitBoxRadius(): Float

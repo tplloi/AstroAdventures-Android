@@ -1,4 +1,4 @@
-package com.roy.ui.game.views.enemyShip.enemyshipdelegates
+package com.roy.ui.game.views.enemyShip.enemyShipDelegates
 
 import android.graphics.*
 import com.roy.ui.game.views.enemyShip.EnemyClusterView
@@ -10,9 +10,9 @@ class AlienShip : IEnemyShip {
         0F, 0F, 0F, 0F
     )
 
-    var enemyY = 0F
+    private var enemyY = 0F
 
-    var enemyX = 0F
+    private var enemyX = 0F
 
     private var coreRadius = 0F
 
@@ -20,8 +20,7 @@ class AlienShip : IEnemyShip {
 
     private val drawPath = Path()
 
-    var rotationOffset = 0F
-
+    private var rotationOffset = 0F
 
     private val mainColor = Color.rgb(
         Random.nextInt(128, 255),
@@ -47,49 +46,75 @@ class AlienShip : IEnemyShip {
         paint.alpha = 70 * enemyLife
     }
 
-
     override fun onDraw(canvas: Canvas) {
         val bodyRadius = coreRadius / 4F
         drawPath.reset()
         drawPath.moveTo(enemyX, enemyY)
         //bottom
-        drawPath.quadTo(enemyX - bodyRadius, enemyY + bodyRadius, enemyX, enemyY + (2F * bodyRadius))
-        drawPath.quadTo(enemyX + bodyRadius,
+        drawPath.quadTo(
+            enemyX - bodyRadius,
             enemyY + bodyRadius,
             enemyX,
-            enemyY + (coreRadius))
+            enemyY + (2F * bodyRadius)
+        )
+        drawPath.quadTo(
+            enemyX + bodyRadius,
+            enemyY + bodyRadius,
+            enemyX,
+            enemyY + (coreRadius)
+        )
 
         drawPath.moveTo(enemyX, enemyY)
 
         //top
-        drawPath.quadTo(enemyX + bodyRadius, enemyY - bodyRadius, enemyX, enemyY - (2F * bodyRadius))
-        drawPath.quadTo(enemyX - bodyRadius,
-            enemyY - bodyRadius ,
+        drawPath.quadTo(
+            enemyX + bodyRadius,
+            enemyY - bodyRadius,
             enemyX,
-            enemyY - (coreRadius))
+            enemyY - (2F * bodyRadius)
+        )
+        drawPath.quadTo(
+            enemyX - bodyRadius,
+            enemyY - bodyRadius,
+            enemyX,
+            enemyY - (coreRadius)
+        )
 
 
         drawPath.moveTo(enemyX, enemyY)
 
         //left
-        drawPath.quadTo(enemyX - bodyRadius, enemyY + bodyRadius, enemyX - (2F * bodyRadius), enemyY)
-        drawPath.quadTo(enemyX - bodyRadius,
+        drawPath.quadTo(
+            enemyX - bodyRadius,
+            enemyY + bodyRadius,
+            enemyX - (2F * bodyRadius),
+            enemyY
+        )
+        drawPath.quadTo(
+            enemyX - bodyRadius,
             enemyY - bodyRadius,
-            enemyX - ( coreRadius),
-            enemyY)
+            enemyX - (coreRadius),
+            enemyY
+        )
 
         drawPath.moveTo(enemyX, enemyY)
 
         //right
-        drawPath.quadTo(enemyX + bodyRadius, enemyY + bodyRadius, enemyX + (2F * bodyRadius), enemyY)
-        drawPath.quadTo(enemyX + bodyRadius ,
+        drawPath.quadTo(
+            enemyX + bodyRadius,
+            enemyY + bodyRadius,
+            enemyX + (2F * bodyRadius),
+            enemyY
+        )
+        drawPath.quadTo(
+            enemyX + bodyRadius,
             enemyY - bodyRadius,
             enemyX + (coreRadius),
-            enemyY)
+            enemyY
+        )
 
         canvas.drawPath(drawPath, paint)
     }
-
 
     override fun translate(offset: Long) {
         enemyY += EnemyClusterView.speed
@@ -97,7 +122,11 @@ class AlienShip : IEnemyShip {
         rotationOffset = offset % 90F
     }
 
-    override fun setInitialSize(boxSize: Float, positionX: Int, positionY: Int) {
+    override fun setInitialSize(
+        boxSize: Float,
+        positionX: Int,
+        positionY: Int,
+    ) {
         drawRect.set(
             boxSize * positionX,
             boxSize * positionY,
