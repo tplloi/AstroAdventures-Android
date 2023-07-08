@@ -1,4 +1,4 @@
-package com.roy.ui.menu.views.bkg
+package com.roy.ui.menu.bkg
 
 import android.content.Context
 import android.graphics.Canvas

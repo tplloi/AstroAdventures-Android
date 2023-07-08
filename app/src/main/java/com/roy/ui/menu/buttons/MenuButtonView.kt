@@ -1,4 +1,4 @@
-package com.roy.ui.menu.views.buttons
+package com.roy.ui.menu.buttons
 
 import android.content.Context
 import android.content.res.ColorStateList

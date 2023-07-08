@@ -1,4 +1,4 @@
-package com.roy.ui.menu.views.scoreView
+package com.roy.ui.menu.scoreView
 
 import android.animation.Animator
 import android.animation.ValueAnimator

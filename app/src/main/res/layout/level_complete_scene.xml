@@ -120,7 +120,7 @@
                 tools:text="200" />
 
 
-            <com.roy.ui.menu.views.scoreView.AnimatedTextView
+            <com.roy.ui.menu.scoreView.AnimatedTextView
                 android:id="@+id/bulletCountValueView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -135,7 +135,7 @@
                 tools:text="200" />
 
 
-            <com.roy.ui.menu.views.scoreView.AnimatedTextView
+            <com.roy.ui.menu.scoreView.AnimatedTextView
                 android:id="@+id/totalScoreValueView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -155,7 +155,7 @@
     </com.google.android.material.card.MaterialCardView>
 
 
-    <com.roy.ui.menu.views.buttons.MenuButtonView
+    <com.roy.ui.menu.buttons.MenuButtonView
         android:id="@+id/btn_continue"
         style="@style/ButtonStyle"
         android:layout_width="0dp"
@@ -171,7 +171,7 @@
         app:layout_constraintWidth_percent="0.6" />
 
 
-    <com.roy.ui.menu.views.buttons.MenuButtonView
+    <com.roy.ui.menu.buttons.MenuButtonView
         android:id="@+id/btn_main_menu"
         style="@style/ButtonStyle"
         android:layout_width="0dp"

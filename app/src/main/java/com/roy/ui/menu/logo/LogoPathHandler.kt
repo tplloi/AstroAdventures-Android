@@ -1,4 +1,4 @@
-package com.roy.ui.menu.views.logo
+package com.roy.ui.menu.logo
 
 import android.graphics.Path
 import kotlin.math.abs

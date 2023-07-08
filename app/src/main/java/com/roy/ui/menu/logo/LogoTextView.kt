@@ -1,4 +1,4 @@
-package com.roy.ui.menu.views.logo
+package com.roy.ui.menu.logo
 
 import android.content.Context
 import android.graphics.Canvas
@@ -37,13 +37,15 @@ class LogoTextView @JvmOverloads constructor(
     ) {
         super.onSizeChanged(w, h, oldw, oldh)
         logoPathHandlerList.clear()
-        logoPathHandlerList.add(LogoPathHandler(
+        logoPathHandlerList.add(
+            LogoPathHandler(
             measuredWidth = w.toFloat(),
             measuredHeight = h.toFloat(),
             initialPointX = 0F,
             initialPointY = 0F,
             pathLength = w.toFloat()
-        ))
+        )
+        )
         logoPathHandlerList.add(
             LogoPathHandler(
                 measuredWidth = w.toFloat(),
