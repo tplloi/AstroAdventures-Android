@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-feature
         android:name="android.hardware.sensor.proximity"
@@ -19,12 +20,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.GalagaTest">
+        android:theme="@style/Theme.GalagaTest"
+        tools:ignore="LockedOrientationActivity">
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
-            <!--            //TODO fix crash portrait android 8-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
