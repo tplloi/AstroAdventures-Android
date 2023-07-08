@@ -4,6 +4,7 @@ import android.content.Context
 import android.media.AudioAttributes
 import android.media.AudioAttributes.CONTENT_TYPE_MUSIC
 import android.media.SoundPool
+import androidx.annotation.Keep
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
@@ -25,10 +26,16 @@ class SoundManager(
     fun init() {
         soundPool = SoundPool.Builder()
             .setMaxStreams(2)
-            .setAudioAttributes(AudioAttributes.Builder().setContentType(CONTENT_TYPE_MUSIC)
-                .build())
+            .setAudioAttributes(
+                AudioAttributes.Builder().setContentType(CONTENT_TYPE_MUSIC)
+                    .build()
+            )
             .build()
-        soundId = soundPool?.load(context, soundData.soundFile, 1)
+        soundId = soundPool?.load(
+            /* context = */ context,
+            /* resId = */soundData.soundFile,
+            /* priority = */1
+        )
 
     }
 
@@ -38,10 +45,9 @@ class SoundManager(
         }
     }
 
-
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     fun stopPlayback() {
-        soundId?.let { soundid -> soundPool?.stop(soundid) }
+        soundId?.let { soundId -> soundPool?.stop(soundId) }
     }
 
     fun release() {
@@ -50,6 +56,10 @@ class SoundManager(
     }
 }
 
-data class SoundData(val soundFile: Int, val soundName: String)
+@Keep
+data class SoundData(
+    val soundFile: Int,
+    val soundName: String,
+)
 
 const val PLAYER_BULLET_SOUND = "PLAYER_BULLET_SOUND"

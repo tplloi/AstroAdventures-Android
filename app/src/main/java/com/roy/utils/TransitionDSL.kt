@@ -12,12 +12,18 @@ inline fun TransitionSet.addSet(block: TransitionSet.() -> Unit) {
     addTransition(TransitionSet().apply(block))
 }
 
-inline fun TransitionSet.addTransition(transition: Transition, block: Transition.() -> Unit) {
+inline fun TransitionSet.addTransition(
+    transition: Transition,
+    block: Transition.() -> Unit,
+) {
     transition.apply(block)
     addTransition(transition)
 }
 
-inline fun Transition.attachListener(crossinline onStart: () -> Unit, noinline onEnd: ((Transition) -> Unit)? = null) {
+inline fun Transition.attachListener(
+    crossinline onStart: () -> Unit,
+    noinline onEnd: ((Transition) -> Unit)? = null,
+) {
 
     addListener(object : TransitionListenerAdapter() {
         override fun onTransitionStart(transition: Transition) {

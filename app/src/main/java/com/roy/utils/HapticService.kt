@@ -5,7 +5,6 @@ import android.content.Context.VIBRATOR_SERVICE
 import android.os.VibrationEffect
 import android.os.Vibrator
 
-
 class HapticService(context: Context) {
 
     private var vibratorService: Vibrator? = null
@@ -14,9 +13,17 @@ class HapticService(context: Context) {
         vibratorService = context.getSystemService(VIBRATOR_SERVICE) as Vibrator?
     }
 
-    fun performHapticFeedback(time: Long, amplitude: Int = 255) {
+    fun performHapticFeedback(
+        time: Long,
+        amplitude: Int = 255,
+    ) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            vibratorService?.vibrate(VibrationEffect.createOneShot(time, amplitude))
+            vibratorService?.vibrate(
+                VibrationEffect.createOneShot(
+                    /* milliseconds = */ time,
+                    /* amplitude = */amplitude
+                )
+            )
         } else {
             vibratorService?.vibrate(time)
         }

@@ -26,8 +26,10 @@ fun <T : Number> map(
 
 fun AppCompatActivity.goFullScreen() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
-            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+        )
         window.attributes.layoutInDisplayCutoutMode =
             WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
     }
