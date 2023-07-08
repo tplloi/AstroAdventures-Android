@@ -1,5 +1,6 @@
 package com.roy.ui
 
+import android.annotation.SuppressLint
 import android.media.MediaPlayer
 import android.view.Gravity
 import android.view.animation.AccelerateDecelerateInterpolator
@@ -28,6 +29,7 @@ import com.roy.utils.transitionSet
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
+@SuppressLint("SetTextI18n")
 fun MainActivity.observeScreenStates() {
     lifecycleScope.launchWhenCreated {
         viewModel.observeScreenState()
@@ -36,13 +38,15 @@ fun MainActivity.observeScreenStates() {
                 when (it) {
                     ScreenStates.AppInit -> {
                         backgroundMusicManager.startPlaying()
-                        transitionTo(initScene.scene, Fade(Fade.MODE_IN))
+                        transitionTo(
+                            toScene = initScene.scene,
+                            transition = Fade(Fade.MODE_IN)
+                        )
                     }
 
                     ScreenStates.GameMenu -> {
                         backgroundMusicManager.startPlaying()
                         gameMenuScene.binding.apply {
-
                             val transition = transitionSet {
 
                                 ordering = ORDERING_SEQUENTIAL
@@ -71,12 +75,16 @@ fun MainActivity.observeScreenStates() {
                             }
                             if (viewModel.previousState == ScreenStates.GameOver) {
                                 transitionFromTo(
-                                    gameOverScene.scene,
-                                    gameMenuScene.scene,
-                                    transition
+                                    fromScene = gameOverScene.scene,
+                                    toScene = gameMenuScene.scene,
+                                    transition = transition
                                 )
                             } else {
-                                transitionFromTo(initScene.scene, gameMenuScene.scene, transition)
+                                transitionFromTo(
+                                    fromScene = initScene.scene,
+                                    toScene = gameMenuScene.scene,
+                                    transition = transition
+                                )
                             }
                         }
                         gameMenuScene.binding.btnStart.setOnClickListener {
@@ -102,22 +110,25 @@ fun MainActivity.observeScreenStates() {
                             Score.resetScore()
                             com.roy.data.PlayerHealthInfo.resetHealth()
                         }
-                        transitionTo(levelStartScene.scene, Fade(Fade.MODE_IN).apply {
-                            onEnd {
-                                uiEventJob = lifecycleScope.launchWhenCreated {
-                                    if (isActive) {
-                                        (3 downTo 1).forEach {
-                                            levelStartScene.binding.timerView.text = it.toString()
-                                            delay(1000)
+                        transitionTo(
+                            toScene = levelStartScene.scene,
+                            transition = Fade(Fade.MODE_IN).apply {
+                                onEnd {
+                                    uiEventJob = lifecycleScope.launchWhenCreated {
+                                        if (isActive) {
+                                            (3 downTo 1).forEach { item ->
+                                                levelStartScene.binding.timerView.text =
+                                                    item.toString()
+                                                delay(1000)
+                                            }
+                                            if (com.roy.data.LevelInfo.hasPlayedTutorial)
+                                                viewModel.updateUIState(ScreenStates.StartGame)
+                                            else
+                                                viewModel.updateUIState(ScreenStates.StartLevelZero)
                                         }
-                                        if (com.roy.data.LevelInfo.hasPlayedTutorial)
-                                            viewModel.updateUIState(ScreenStates.StartGame)
-                                        else
-                                            viewModel.updateUIState(ScreenStates.StartLevelZero)
                                     }
                                 }
-                            }
-                        })
+                            })
                     }
 
                     is ScreenStates.StartGame -> {
@@ -128,7 +139,11 @@ fun MainActivity.observeScreenStates() {
                             enemiesView.bulletStore = bulletStore
                             spaceShipView.bulletStore = bulletStore
                             spaceShipView.onHitCallBack = {
-                                containerView.startShakeAnimation(50, 10, 4)
+                                containerView.startShakeAnimation(
+                                    duration = 50,
+                                    offset = 10,
+                                    repeatCount = 4
+                                )
                             }
                             spaceShipView.onAmmoCollectedCallback = {
                                 ammoCountView.onBulletCollected()
@@ -144,50 +159,56 @@ fun MainActivity.observeScreenStates() {
 
                             lifecycleScope.launchWhenCreated {
                                 bulletStore.bulletCountFlow().collect { ammoCount ->
-                                    ammoCountView.setBulletCount(ammoCount, bulletStore.maxCount)
+                                    ammoCountView.setBulletCount(
+                                        ammoCount = ammoCount,
+                                        maxCount = bulletStore.maxCount
+                                    )
                                 }
                             }
 
-                            transitionFromTo(levelStartScene.scene, gameScene.scene, transitionSet {
-                                addTransition(Slide(Gravity.BOTTOM)) {
-                                    duration = 1200
-                                    interpolator = AccelerateDecelerateInterpolator()
-                                    addTarget(spaceShipView)
-                                }
-                                addTransition(Slide(Gravity.TOP)) {
-                                    duration = 2200
-                                    interpolator = LinearInterpolator()
-                                    addTarget(enemiesView)
-                                }
-                                onEnd {
-                                    startGame(gameScene.binding)
+                            transitionFromTo(
+                                fromScene = levelStartScene.scene,
+                                toScene = gameScene.scene,
+                                transition = transitionSet {
+                                    addTransition(Slide(Gravity.BOTTOM)) {
+                                        duration = 1200
+                                        interpolator = AccelerateDecelerateInterpolator()
+                                        addTarget(spaceShipView)
+                                    }
+                                    addTransition(Slide(Gravity.TOP)) {
+                                        duration = 2200
+                                        interpolator = LinearInterpolator()
+                                        addTarget(enemiesView)
+                                    }
+                                    onEnd {
+                                        startGame(gameScene.binding)
 
-                                    val itemSoundManger = SoundManager(
-                                        applicationContext,
-                                        SoundData(
-                                            R.raw.player_bullet_sound,
-                                            PLAYER_BULLET_SOUND
-                                        ),
-                                        lifecycle
-                                    )
+                                        val itemSoundManger = SoundManager(
+                                            context = applicationContext,
+                                            soundData = SoundData(
+                                                R.raw.player_bullet_sound,
+                                                PLAYER_BULLET_SOUND
+                                            ),
+                                            lifecycle = lifecycle
+                                        )
 
-                                    dropsView.setSoundManager(itemSoundManger)
-                                    bulletView.setSoundManager(itemSoundManger)
+                                        dropsView.setSoundManager(itemSoundManger)
+                                        bulletView.setSoundManager(itemSoundManger)
 
-                                    bulletView.setOnClickListener {
-                                        if (bulletStore.getAmmoCount() != 0) {
-                                            bulletStore.updateInventory()
-                                            bulletView.fire(
-                                                spaceShipView.getShipX(),
-                                                spaceShipView.getShipY(),
-                                                BulletView.Sender.PLAYER
-                                            )
-                                        } else {
-                                            viewModel.updateUIState(ScreenStates.RanOutOfAmmo)
+                                        bulletView.setOnClickListener {
+                                            if (bulletStore.getAmmoCount() != 0) {
+                                                bulletStore.updateInventory()
+                                                bulletView.fire(
+                                                    x = spaceShipView.getShipX(),
+                                                    y = spaceShipView.getShipY(),
+                                                    sender = BulletView.Sender.PLAYER
+                                                )
+                                            } else {
+                                                viewModel.updateUIState(ScreenStates.RanOutOfAmmo)
+                                            }
                                         }
                                     }
-                                }
-                            })
+                                })
                         }
                     }
 
@@ -196,9 +217,10 @@ fun MainActivity.observeScreenStates() {
                     }
 
                     is ScreenStates.LevelComplete -> {
-                        transitionFromTo(gameScene.scene,
-                            levelCompleteScene.scene,
-                            Fade(Fade.MODE_IN).apply {
+                        transitionFromTo(
+                            fromScene = gameScene.scene,
+                            toScene = levelCompleteScene.scene,
+                            transition = Fade(Fade.MODE_IN).apply {
                                 duration = 700
                             })
 
@@ -244,12 +266,15 @@ fun MainActivity.observeScreenStates() {
                     }
 
                     ScreenStates.ViewHighScores -> {
-                        transitionTo(highScoreScene.scene, Fade(Fade.MODE_IN))
+                        transitionTo(
+                            toScene = highScoreScene.scene,
+                            transition = Fade(Fade.MODE_IN)
+                        )
                         highScoreScene.binding.apply {
                             lifecycleScope.launch {
                                 com.roy.data.DataStoreHelper.getHighScore()
                                     .zip(com.roy.data.DataStoreHelper.getMaxLevels()) { highScore, maxLevels ->
-                                        Pair(maxLevels, highScore)
+                                        Pair(first = maxLevels, second = highScore)
                                     }.collect {
                                         scoreBoard.text =
                                             getString(R.string.level, it.first, it.second)
@@ -259,9 +284,10 @@ fun MainActivity.observeScreenStates() {
                     }
 
                     ScreenStates.LevelStartWarp -> {
-                        transitionFromTo(levelCompleteScene.scene,
-                            levelStartWarpScene.scene,
-                            Fade(Fade.MODE_IN).apply {
+                        transitionFromTo(
+                            fromScene = levelCompleteScene.scene,
+                            toScene = levelStartWarpScene.scene,
+                            transition = Fade(Fade.MODE_IN).apply {
                                 duration = 200
                             })
                         binding.root.setTrails(true)
@@ -289,10 +315,8 @@ fun MainActivity.observeScreenStates() {
                             }
 
                             btnMainMenu.setOnClickListener {
-                                viewModel.updateUIState(ScreenStates.GameMenu)
+                                viewModel.updateUIState(screenStates = ScreenStates.GameMenu)
                             }
-
-
                             btnTryAgain.setOnClickListener {
                                 com.roy.data.LevelInfo.resetLevel()
                                 viewModel.updateUIState(ScreenStates.LevelStart)
@@ -307,7 +331,6 @@ fun MainActivity.observeScreenStates() {
                             })
                     }
 
-
                     ScreenStates.YouDied -> {
                         val deathSoundManager = MediaPlayer.create(
                             this@observeScreenStates, R.raw.player_explosion
@@ -317,9 +340,10 @@ fun MainActivity.observeScreenStates() {
                             }
                         }
                         delay(500)
-                        transitionFromTo(gameScene.scene,
-                            youDiedScene.scene,
-                            Fade(Fade.MODE_IN).apply {
+                        transitionFromTo(
+                            fromScene = gameScene.scene,
+                            toScene = youDiedScene.scene,
+                            transition = Fade(Fade.MODE_IN).apply {
                                 addTarget(youDiedScene.binding.diedText)
                                 duration = 1600L
                             })
@@ -356,27 +380,30 @@ private fun MainActivity.startLevelZero() {
 
         lifecycleScope.launch {
             scoreFlow().collect { score ->
-                scoreView.text =
-                    getString(R.string.score_text, score)
+                scoreView.text = getString(R.string.score_text, score)
             }
         }
 
         lifecycleScope.launch {
             bulletStore.bulletCountFlow().collect { ammoCount ->
-                ammoCountView.setBulletCount(ammoCount, bulletStore.maxCount)
+                ammoCountView.setBulletCount(ammoCount = ammoCount, maxCount = bulletStore.maxCount)
             }
         }
 
-        transitionFromTo(levelStartScene.scene,
-            levelZeroGameScene.scene,
-            transitionSet {
+        transitionFromTo(
+            fromScene = levelStartScene.scene,
+            toScene = levelZeroGameScene.scene,
+            transition = transitionSet {
                 addTransition(Slide(Gravity.BOTTOM)) {
                     duration = 1200
                     interpolator = AccelerateDecelerateInterpolator()
                     addTarget(spaceShipView)
                 }
                 onEnd {
-                    showInitialInstructions(this@apply, bulletStore)
+                    showInitialInstructions(
+                        levelZeroGameBinding = this@apply,
+                        bulletStore = bulletStore
+                    )
                 }
             })
     }
@@ -387,4 +414,7 @@ fun startGame(binding: GameSceneBinding) {
     binding.enemiesView.startGame()
 }
 
-data class SceneContainer<Binding : ViewBinding>(val binding: Binding, val scene: Scene)
+data class SceneContainer<Binding : ViewBinding>(
+    val binding: Binding,
+    val scene: Scene,
+)
