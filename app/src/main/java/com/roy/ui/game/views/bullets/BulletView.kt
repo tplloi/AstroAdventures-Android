@@ -41,18 +41,25 @@ class BulletView(context: Context, attributeSet: AttributeSet? = null) :
         isCallBackInvoked = true
         fireSoundManager?.play()
         if (sender == Sender.PLAYER) {
-            bulletStateList.add(Bullet(x,
-                measuredHeight - y,
-                sender,
-                measuredHeight,
-                softBodyObjectTracker))
+            bulletStateList.add(
+                Bullet(
+                    x,
+                    measuredHeight - y,
+                    sender,
+                    measuredHeight,
+                    softBodyObjectTracker
+                )
+            )
         } else {
-            bulletStateList.add(Bullet(x,
-                y,
-                sender,
-                measuredHeight,
-                softBodyObjectTracker
-            ))
+            bulletStateList.add(
+                Bullet(
+                    x,
+                    y,
+                    sender,
+                    measuredHeight,
+                    softBodyObjectTracker
+                )
+            )
         }
         postInvalidate()
     }
@@ -68,7 +75,7 @@ class BulletView(context: Context, attributeSet: AttributeSet? = null) :
 
     override fun onDraw(canvas: Canvas?) {
         canvas?.let {
-            bulletStateList.forEachSafe { bullet, iterator ->
+            bulletStateList.forEachSafe { bullet, _ ->
                 bullet.drawObject(canvas)
                 bullet.translateObject()
             }
@@ -104,21 +111,25 @@ class BulletView(context: Context, attributeSet: AttributeSet? = null) :
         private val sender: Sender,
         maxHeight: Int,
         bulletTracker: SoftBodyObjectTracker?,
-    ) : SoftBodyObject(bulletX,
+    ) : SoftBodyObject(
+        bulletX,
         shipY,
         sender,
         maxHeight,
         bulletTracker,
-        SoftBodyObjectType.BULLET) {
+        SoftBodyObjectType.BULLET
+    ) {
 
 
         override val speed: Int = 10
 
         private val bulletPaint = Paint().apply {
             color = if (sender == Sender.PLAYER) {
-                ResourcesCompat.getColor(context.resources,
+                ResourcesCompat.getColor(
+                    context.resources,
                     R.color.bulletColor,
-                    null)
+                    null
+                )
             } else {
                 Color.RED
             }
@@ -163,8 +174,4 @@ class BulletView(context: Context, attributeSet: AttributeSet? = null) :
             field = value
             isCallBackInvoked = false
         }
-}
-
-interface LevelZeroCallBackBullet {
-    fun onFired()
 }

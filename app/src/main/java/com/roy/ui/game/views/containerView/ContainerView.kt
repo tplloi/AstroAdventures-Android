@@ -1,4 +1,4 @@
-package com.roy.ui.game.views.containerview
+package com.roy.ui.game.views.containerView
 
 import android.content.Context
 import android.util.AttributeSet
@@ -8,10 +8,17 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import kotlin.random.Random
 
 
-class ContainerView(context: Context, attributeSet: AttributeSet? = null) :
+class ContainerView(
+    context: Context,
+    attributeSet: AttributeSet? = null,
+) :
     ConstraintLayout(context, attributeSet) {
 
-    fun startShakeAnimation(duration: Int, offset: Int, repeatCount: Int) {
+    fun startShakeAnimation(
+        duration: Int,
+        offset: Int,
+        repeatCount: Int,
+    ) {
         val newOffsetFromX = Random.nextInt(-1, 1).toFloat() * offset
         val newOffsetToX = Random.nextInt(-1, 1).toFloat() * offset
         val newOffsetFromY = Random.nextInt(-1, 1).toFloat() * offset

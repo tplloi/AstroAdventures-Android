@@ -12,8 +12,8 @@ open class BaseCustomView(
 ) : View(context, attributeSet) {
 
     protected val lifeCycleOwner by lazy { CustomLifeCycleOwner() }
-
     private var isActive = false
+
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         lifeCycleOwner.startListening()
