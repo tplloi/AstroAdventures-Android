@@ -2,7 +2,6 @@ package com.roy.utils
 
 import androidx.lifecycle.*
 
-
 class CustomLifeCycleOwner : LifecycleOwner {
     private val mLifecycleRegistry: LifecycleRegistry = LifecycleRegistry(this)
 
@@ -25,6 +24,5 @@ class CustomLifeCycleOwner : LifecycleOwner {
     init {
         mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START)
     }
-
 
 }

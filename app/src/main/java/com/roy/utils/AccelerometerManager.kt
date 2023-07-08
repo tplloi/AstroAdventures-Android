@@ -6,7 +6,10 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 
-class AccelerometerManager(context: Context, val onUpdateCallBack: (SensorEvent) -> Unit) {
+class AccelerometerManager(
+    context: Context,
+    val onUpdateCallBack: (SensorEvent) -> Unit,
+) {
 
     private val gyroscopeSensor: Sensor by lazy {
         sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
@@ -27,11 +30,10 @@ class AccelerometerManager(context: Context, val onUpdateCallBack: (SensorEvent)
             override fun onAccuracyChanged(sensor: Sensor, i: Int) {}
         }
         sensorManager.registerListener(
-            gyroscopeSensorListener,
-            gyroscopeSensor, SensorManager.SENSOR_DELAY_GAME
+            /* listener = */ gyroscopeSensorListener,
+            /* sensor = */ gyroscopeSensor, /* samplingPeriodUs = */ SensorManager.SENSOR_DELAY_GAME
         )
     }
-
 
     fun stopListening() {
         sensorManager.unregisterListener(gyroscopeSensorListener)
