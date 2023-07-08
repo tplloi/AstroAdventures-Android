@@ -9,9 +9,9 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 interface RigidBodyObject {
-    val collisionDetector: com.roy.data.CollisionDetector
+    val collisionDetector: CollisionDetector
     fun removeSoftBodyEntry(bullet: UUID)
-    fun checkCollision(softBodyObjectData: com.roy.data.SoftBodyObjectData)
+    fun checkCollision(softBodyObjectData: SoftBodyObjectData)
 }
 
 
@@ -23,12 +23,12 @@ class CollisionDetector(
 
     private var bulletWatcherJob: Job = Job()
 
-    private val softBodyPositionList: MutableList<com.roy.data.SoftBodyObjectData> =
+    private val softBodyPositionList: MutableList<SoftBodyObjectData> =
         mutableListOf()
 
     fun checkCollision(
-        softBodyObjectData: com.roy.data.SoftBodyObjectData,
-        newPositionCollected: (SoftBodyCoordinates, com.roy.data.SoftBodyObjectData) -> Unit,
+        softBodyObjectData: SoftBodyObjectData,
+        newPositionCollected: (SoftBodyCoordinates, SoftBodyObjectData) -> Unit,
     ) {
         softBodyPositionList.add(softBodyObjectData)
         bulletWatcherJob.cancelChildren()
@@ -44,7 +44,7 @@ class CollisionDetector(
         }
     }
 
-    fun onHitRigidBody(softBodyObject: com.roy.data.SoftBodyObjectData) {
+    fun onHitRigidBody(softBodyObject: SoftBodyObjectData) {
         softBodyPositionList.forEach { softBodyObj ->
             if (softBodyObject.objectId == softBodyObj.objectId) {
                 onCollisionCallBack?.onCollision(softBodyObject)

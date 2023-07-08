@@ -20,9 +20,9 @@ object Score {
 
     fun saveScore(lifCycleScope: LifecycleCoroutineScope) {
         lifCycleScope.launch {
-            com.roy.data.DataStoreHelper.getHighScore().collect {
+            DataStoreHelper.getHighScore().collect {
                 if (it < scoreFlow.value) {
-                    com.roy.data.DataStoreHelper.setHighScore(scoreFlow.value)
+                    DataStoreHelper.setHighScore(scoreFlow.value)
                 }
             }
         }

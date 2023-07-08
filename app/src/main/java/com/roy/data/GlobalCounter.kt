@@ -8,10 +8,10 @@ object GlobalCounter {
 
     private val enemyTimer = ticker(35, 1000, Dispatchers.Default)
 
-    val enemyTimerFlow = com.roy.data.GlobalCounter.enemyTimer.receiveAsFlow()
+    val enemyTimerFlow = enemyTimer.receiveAsFlow()
 
     private val starsBackgroundTimer = ticker(30, 1000, Dispatchers.Default)
 
-    val starsBackgroundTimerFlow = com.roy.data.GlobalCounter.starsBackgroundTimer.receiveAsFlow()
+    val starsBackgroundTimerFlow = starsBackgroundTimer.receiveAsFlow()
 
 }

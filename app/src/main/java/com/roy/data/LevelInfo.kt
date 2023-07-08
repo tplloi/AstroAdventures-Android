@@ -7,10 +7,10 @@ object LevelInfo {
     var level = 0
 
     fun resetLevel() {
-        com.roy.data.LevelInfo.level = 1
+        level = 1
     }
 
     fun increment() {
-        com.roy.data.LevelInfo.level++
+        level++
     }
 }

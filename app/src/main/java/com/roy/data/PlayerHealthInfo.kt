@@ -8,18 +8,18 @@ object PlayerHealthInfo {
 
     const val MAX_HEALTH = 20
 
-    private val playerHealth = MutableStateFlow(com.roy.data.PlayerHealthInfo.MAX_HEALTH)
+    private val playerHealth = MutableStateFlow(MAX_HEALTH)
 
-    fun getPlayerHealthFlow(): Flow<Int> = com.roy.data.PlayerHealthInfo.playerHealth
+    fun getPlayerHealthFlow(): Flow<Int> = playerHealth
 
-    fun getPlayerHealthValue() = com.roy.data.PlayerHealthInfo.playerHealth.value
+    fun getPlayerHealthValue() = playerHealth.value
 
     fun onHit() {
-        Log.d("Health", "${com.roy.data.PlayerHealthInfo.playerHealth.value}")
-        com.roy.data.PlayerHealthInfo.playerHealth.value -= 2
+//        Log.d("Health", "${playerHealth.value}")
+        playerHealth.value -= 2
     }
 
     fun resetHealth() {
-        com.roy.data.PlayerHealthInfo.playerHealth.value = 20
+        playerHealth.value = 20
     }
 }

@@ -23,40 +23,40 @@ object DataStoreHelper {
     var dataStore: DataStore<Preferences>? = null
 
     fun initDataStore(activity: AppCompatActivity) {
-        com.roy.data.DataStoreHelper.dataStore = activity.createDataStore(
+        dataStore = activity.createDataStore(
             name = "app_settings"
         )
 
         activity.lifecycleScope.launchWhenCreated {
-            com.roy.data.LevelInfo.hasPlayedTutorial =
-                com.roy.data.DataStoreHelper.getHasCompletedTutorial()
+            LevelInfo.hasPlayedTutorial =
+                getHasCompletedTutorial()
         }
     }
 
     suspend fun setHasCompletedTutorial() {
-        com.roy.data.DataStoreHelper.dataStore?.edit {
-            it[com.roy.data.DataStoreHelper.HAS_COMPLETED_LEVEL_ZERO] = true
+        dataStore?.edit {
+            it[HAS_COMPLETED_LEVEL_ZERO] = true
         }
     }
 
     private suspend fun getHasCompletedTutorial(): Boolean {
-        return com.roy.data.DataStoreHelper.dataStore?.data?.first()?.get(com.roy.data.DataStoreHelper.HAS_COMPLETED_LEVEL_ZERO) ?: false
+        return dataStore?.data?.first()?.get(HAS_COMPLETED_LEVEL_ZERO) ?: false
     }
 
 
     suspend fun setHighScore(score: Long) {
-        com.roy.data.DataStoreHelper.dataStore?.edit {
-            it[com.roy.data.DataStoreHelper.HIGH_SCORE] = score
-            it[com.roy.data.DataStoreHelper.MAX_LEVELS] = com.roy.data.LevelInfo.level
+        dataStore?.edit {
+            it[HIGH_SCORE] = score
+            it[MAX_LEVELS] = LevelInfo.level
         }
     }
 
-    internal fun getHighScore(): Flow<Long> = com.roy.data.DataStoreHelper.dataStore?.data?.map { preference ->
-        preference[com.roy.data.DataStoreHelper.HIGH_SCORE] ?: 0
+    internal fun getHighScore(): Flow<Long> = dataStore?.data?.map { preference ->
+        preference[HIGH_SCORE] ?: 0
     } ?: flowOf(0)
 
-    internal fun getMaxLevels(): Flow<Int> = com.roy.data.DataStoreHelper.dataStore?.data?.map { preference ->
-        preference[com.roy.data.DataStoreHelper.MAX_LEVELS] ?: 0
+    internal fun getMaxLevels(): Flow<Int> = dataStore?.data?.map { preference ->
+        preference[MAX_LEVELS] ?: 0
     } ?: flowOf(0)
 
 }

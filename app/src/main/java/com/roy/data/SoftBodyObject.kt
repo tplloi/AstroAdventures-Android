@@ -10,7 +10,7 @@ abstract class SoftBodyObject(
     objectX: Float,
     initY: Float,
     private val sender: BulletView.Sender,
-    var maxHeight: Int,
+    private var maxHeight: Int,
     private val softBodyObjectTracker: SoftBodyObjectTracker?,
     softBodyObjectType: SoftBodyObjectType,
 ) {
