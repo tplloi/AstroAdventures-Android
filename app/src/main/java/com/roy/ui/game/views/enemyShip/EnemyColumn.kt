@@ -14,7 +14,10 @@ data class EnemyColumn(
     }
 }
 
-inline fun List<EnemyColumn>.checkXForEach(x: Float, transform: (EnemyColumn) -> Unit) {
+inline fun List<EnemyColumn>.checkXForEach(
+    x: Float,
+    transform: (EnemyColumn) -> Unit,
+) {
     val iterator = iterator()
     while (iterator.hasNext()) {
         val enemyColumn = iterator.next()
@@ -31,10 +34,12 @@ inline fun MutableList<EnemyColumn>.flattenedForEach(transform: (Enemy) -> Unit)
     }
 }
 
-inline fun MutableList<EnemyColumn>.checkIfYReached(maxHeight: Int, transform: (Boolean) -> Unit) {
+inline fun MutableList<EnemyColumn>.checkIfYReached(
+    maxHeight: Int,
+    transform: (Boolean) -> Unit,
+) {
     transform(
         flatMap { it.enemyList }.any {
             (it.enemyY + it.hitBoxRadius) > maxHeight && it.isVisible
         })
 }
-

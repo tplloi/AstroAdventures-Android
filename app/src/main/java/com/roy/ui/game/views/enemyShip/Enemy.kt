@@ -9,7 +9,6 @@ import com.roy.ui.game.views.enemyShip.enemyShipDelegates.IEnemyShip
 import com.roy.ui.game.views.enemyShip.enemyShipDelegates.TieFighter
 import kotlin.random.Random
 
-
 class Enemy {
 
     var isVisible: Boolean = true
@@ -31,7 +30,6 @@ class Enemy {
 
     private val points = enemyLife * 25L
 
-
     val enemyX: Float
         get() = enemyDelegate.getPositionX()
 
@@ -50,12 +48,20 @@ class Enemy {
         isVisible = enemyLife > 0
     }
 
-
     companion object {
-        fun builder(columnSize: Int, width: Int, positionX: Int, positionY: Int): Enemy {
+        fun builder(
+            columnSize: Int,
+            width: Int,
+            positionX: Int,
+            positionY: Int,
+        ): Enemy {
             return Enemy().apply {
                 val boxSize = width / columnSize.toFloat()
-                enemyDelegate.setInitialSize(boxSize, positionX, positionY)
+                enemyDelegate.setInitialSize(
+                    boxSize = boxSize,
+                    positionX = positionX,
+                    positionY = positionY
+                )
             }
         }
     }
@@ -69,10 +75,11 @@ class Enemy {
     }
 
     fun checkEnemyYPosition(bulletY: Float): Boolean {
-        return Range(enemyDelegate.getPositionY() - enemyDelegate.hitBoxRadius(),
-            enemyDelegate.getPositionY() + enemyDelegate.hitBoxRadius()).contains(bulletY) && isVisible
+        return Range(
+            /* lower = */ enemyDelegate.getPositionY() - enemyDelegate.hitBoxRadius(),
+            /* upper = */ enemyDelegate.getPositionY() + enemyDelegate.hitBoxRadius()
+        ).contains(bulletY) && isVisible
     }
-
 
     fun translate(offset: Long) {
         enemyDelegate.translate(offset)

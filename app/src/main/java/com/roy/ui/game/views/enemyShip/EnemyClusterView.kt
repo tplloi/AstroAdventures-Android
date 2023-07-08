@@ -13,9 +13,11 @@ import kotlinx.coroutines.channels.ticker
 import kotlinx.coroutines.flow.receiveAsFlow
 import java.util.*
 
-
-class EnemyClusterView(context: Context, attributeSet: AttributeSet? = null) :
-    BaseCustomView(context, attributeSet), com.roy.data.RigidBodyObject {
+class EnemyClusterView(
+    context: Context,
+    attributeSet: AttributeSet? = null,
+) :
+    BaseCustomView(context = context, attributeSet = attributeSet), com.roy.data.RigidBodyObject {
 
     companion object {
         var speed = 2F
@@ -52,14 +54,19 @@ class EnemyClusterView(context: Context, attributeSet: AttributeSet? = null) :
 
     var disableInit: Boolean = false
 
-    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-        super.onSizeChanged(w, h, oldw, oldh)
+    override fun onSizeChanged(
+        w: Int,
+        h: Int,
+        oldw: Int,
+        oldh: Int,
+    ) {
+        super.onSizeChanged(/* w = */ w, /* h = */ h, /* oldw = */ oldw, /* oldh = */ oldh)
         if (!disableInit)
             initEnemies()
     }
 
     init {
-        setLayerType(LAYER_TYPE_HARDWARE, null)
+        setLayerType(/* layerType = */ LAYER_TYPE_HARDWARE, /* paint = */ null)
         if (rowSize < maxRowsSize) {
             rowSize = com.roy.data.LevelInfo.level + 1
         }
@@ -68,7 +75,6 @@ class EnemyClusterView(context: Context, attributeSet: AttributeSet? = null) :
     private fun initEnemies() {
         enemyList.clear()
         repeat(columnSize) { x ->
-
             val enemiesList = MutableList(rowSize) { y ->
                 Enemy.builder(columnSize, measuredWidth, x, y)
             }
@@ -89,7 +95,6 @@ class EnemyClusterView(context: Context, attributeSet: AttributeSet? = null) :
         translateJob.cancel()
         firingJob.cancel()
     }
-
 
     /**
      * Counter for translating the enemies
@@ -113,12 +118,11 @@ class EnemyClusterView(context: Context, attributeSet: AttributeSet? = null) :
         }
     }
 
-
     private fun fireCanon() {
         if (shouldEmitObjects()) {
             firingJob.cancel()
             firingJob = lifeCycleOwner.customViewLifeCycleScope.launchWhenCreated {
-                ticker(1000, 200).receiveAsFlow().collect {
+                ticker(delayMillis = 1000, initialDelayMillis = 200).receiveAsFlow().collect {
                     executeIfActive {
                         if (enemyList.isNotEmpty()) {
                             val enemyList = enemyList.random()
@@ -148,7 +152,6 @@ class EnemyClusterView(context: Context, attributeSet: AttributeSet? = null) :
         postInvalidate()
     }
 
-
     override fun onDraw(canvas: Canvas?) {
         enemyList.flattenedForEach {
             it.onDraw(canvas)
@@ -159,7 +162,6 @@ class EnemyClusterView(context: Context, attributeSet: AttributeSet? = null) :
         softBodyObjectData: SoftBodyObjectData,
     ) {
         collisionDetector.checkCollision(softBodyObjectData) { softBodyPosition, softBodyObject ->
-
             enemyList.checkXForEach(softBodyPosition.x) {
                 val enemyInLine = it.enemyList.reversed().find {
                     it.checkEnemyYPosition(softBodyPosition.y)
@@ -171,7 +173,6 @@ class EnemyClusterView(context: Context, attributeSet: AttributeSet? = null) :
                     scanForEnemies()
                 }
             }
-
         }
     }
 
@@ -197,16 +198,15 @@ class EnemyClusterView(context: Context, attributeSet: AttributeSet? = null) :
             }
         }
         dropGift(enemyInLine)
-        hapticService.performHapticFeedback(64, 48)
+        hapticService.performHapticFeedback(time = 64, amplitude = 48)
         postInvalidate()
     }
 
     private fun dropGift(enemyInLine: Enemy) {
         if (enemyInLine.hasDrops && enemyInLine.enemyLife == 0 && shouldEmitObjects()) {
-            enemyDetailsCallback?.hasDrop(enemyInLine.enemyX, enemyInLine.enemyY)
+            enemyDetailsCallback?.hasDrop(enemyX = enemyInLine.enemyX, enemyY = enemyInLine.enemyY)
         }
     }
-
 
     fun startGame() {
         startTranslating()
@@ -216,21 +216,10 @@ class EnemyClusterView(context: Context, attributeSet: AttributeSet? = null) :
 }
 
 fun List<Enemy>.getRangeX(): Pair<Float, Float> {
-    return if (size > 0) {
+    return if (isNotEmpty()) {
         val enemy = get(0)
-        Pair(enemy.enemyX - enemy.hitBoxRadius, enemy.enemyX + enemy.hitBoxRadius)
+        Pair(first = enemy.enemyX - enemy.hitBoxRadius, second = enemy.enemyX + enemy.hitBoxRadius)
     } else {
-        Pair(0F, 0F)
+        Pair(first = 0F, second = 0F)
     }
-}
-
-interface EnemyDetailsCallback {
-    fun onAllEliminated(ammoCount: Int)
-    fun onCanonReady(enemyX: Float, enemyY: Float)
-    fun hasDrop(enemyX: Float, enemyY: Float)
-    fun onGameOver()
-}
-
-interface OnCollisionCallBack {
-    fun onCollision(softBodyObject: SoftBodyObjectData)
 }
