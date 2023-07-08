@@ -28,7 +28,7 @@
             android:textColor="@color/secondaryFontColor"
             android:textSize="@dimen/menu_logo_text_size"
             android:textStyle="italic|bold"
-            app:fontFamily="@font/determination_mono" />
+            app:fontFamily="@font/font2" />
 
     </FrameLayout>
 

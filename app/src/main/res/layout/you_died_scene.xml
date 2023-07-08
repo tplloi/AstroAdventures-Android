@@ -15,7 +15,7 @@
         android:textColor="@color/design_default_color_error"
         android:textSize="@dimen/text_44_size"
         android:alpha="0"
-        app:fontFamily="@font/determination_mono"
+        app:fontFamily="@font/font2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
