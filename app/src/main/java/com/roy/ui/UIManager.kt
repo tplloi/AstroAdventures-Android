@@ -224,7 +224,7 @@ fun MainActivity.observeScreenStates() {
                             })
 
                         levelCompleteScene.binding.apply {
-                            successText.text =
+                            tvSuccessText.text =
                                 getString(R.string.level_complete, com.roy.data.LevelInfo.level)
                             tvScoreViewValue.text = scoreFlow().value.toString()
 
@@ -233,7 +233,7 @@ fun MainActivity.observeScreenStates() {
                                 val constraint2 = ConstraintSet()
                                 constraint2.clone(
                                     root.context,
-                                    R.layout.level_complete_scoreboard_scene
+                                    R.layout.scene_level_complete_scoreboard
                                 )
 
                                 TransitionManager.beginDelayedTransition(root)

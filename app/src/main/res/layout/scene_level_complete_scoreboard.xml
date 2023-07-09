@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/successText"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvSuccessText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -24,7 +24,6 @@
         app:layout_constraintVertical_bias="0.69"
         app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintWidth_percent="0.7" />
-
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/groupScoreBoard"
@@ -56,12 +55,12 @@
             android:layout_height="match_parent"
             android:padding="24dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvScore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:letterSpacing="0.1"
-                android:text="Score"
+                android:text="@string/score"
                 android:textAlignment="center"
                 android:textColor="@color/primaryFontColor"
                 android:textSize="20sp"
@@ -71,13 +70,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/bulletCountView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:letterSpacing="0.1"
-                android:text="Ammo Bonus"
+                android:text="@string/ammo_bonus"
                 android:textAlignment="center"
                 android:textColor="@color/primaryFontColor"
                 android:textSize="20sp"
@@ -87,13 +85,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvScore" />
 
-
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/totalScoreView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:letterSpacing="0.1"
-                android:text="Total"
+                android:text="@string/total"
                 android:textAlignment="center"
                 android:textColor="@color/primaryFontColor"
                 android:textSize="20sp"
@@ -104,8 +101,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/bulletCountView" />
 
-
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvScoreViewValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -118,7 +114,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="200" />
-
 
             <com.roy.ui.menu.scoreView.AnimatedTextView
                 android:id="@+id/bulletCountValueView"
@@ -134,7 +129,6 @@
                 app:layout_constraintTop_toBottomOf="@id/tvScoreViewValue"
                 tools:text="200" />
 
-
             <com.roy.ui.menu.scoreView.AnimatedTextView
                 android:id="@+id/totalScoreValueView"
                 android:layout_width="wrap_content"
@@ -149,11 +143,9 @@
                 app:layout_constraintTop_toBottomOf="@id/bulletCountValueView"
                 tools:text="400" />
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
-
 
     <com.roy.ui.menu.buttons.MenuButtonView
         android:id="@+id/btnContinue"
@@ -170,7 +162,6 @@
         app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintWidth_percent="0.6" />
 
-
     <com.roy.ui.menu.buttons.MenuButtonView
         android:id="@+id/btnMainMenu"
         style="@style/ButtonStyle"
@@ -184,6 +175,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnContinue"
         app:layout_constraintWidth_percent="0.6" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
