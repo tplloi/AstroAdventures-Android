@@ -19,6 +19,10 @@ import com.roy.data.Score
 import com.roy.data.Score.saveScore
 import com.roy.data.Score.scoreFlow
 import com.roy.databinding.SceneGameBinding
+import com.roy.ext.moreApp
+import com.roy.ext.openBrowserPolicy
+import com.roy.ext.rateApp
+import com.roy.ext.shareApp
 import com.roy.ui.game.views.bullets.BulletView
 import com.roy.utils.PLAYER_BULLET_SOUND
 import com.roy.utils.SoundData
@@ -108,16 +112,16 @@ fun MainActivity.observeScreenStates() {
                             viewModel.updateUIState(ScreenStates.ViewHighScores)
                         }
                         gameMenuScene.binding.btnRate.setOnClickListener {
-
+                            rateApp(packageName)
                         }
                         gameMenuScene.binding.btnMore.setOnClickListener {
-
+                            moreApp("Roy93Group")
                         }
                         gameMenuScene.binding.btnShare.setOnClickListener {
-
+                            shareApp()
                         }
                         gameMenuScene.binding.btnPolicy.setOnClickListener {
-
+                            openBrowserPolicy()
                         }
                         gameMenuScene.binding.btnExit.setOnClickListener {
                             finish()
