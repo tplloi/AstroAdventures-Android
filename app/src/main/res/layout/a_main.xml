@@ -7,7 +7,7 @@
     tools:context=".ui.MainActivity">
 
     <FrameLayout
-        android:id="@+id/root_container"
+        android:id="@+id/flRootContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

@@ -7,7 +7,7 @@
     android:keepScreenOn="true"
     tools:context=".ui.MainActivity">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

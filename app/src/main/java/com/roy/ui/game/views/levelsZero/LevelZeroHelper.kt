@@ -136,7 +136,7 @@ interface LevelZeroHelper {
                             dialogView.addDialog(dialog.text)
                             initUIComponents(levelZeroGameBinding,
                                 this@showInitialInstructions)
-                            scoreView.isVisible = true
+                            tvScore.isVisible = true
                             LevelInfo.hasPlayedTutorial = true
                             setHasCompletedTutorial()
                             delay(dialog.duration)

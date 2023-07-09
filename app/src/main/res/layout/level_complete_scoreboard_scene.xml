@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="visible"
-        app:constraint_referenced_ids="scoreBoard,btn_main_menu,btn_continue" />
+        app:constraint_referenced_ids="scoreBoard,btnMainMenu,btn_continue" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/scoreBoard"
@@ -57,7 +57,7 @@
             android:padding="24dp">
 
             <TextView
-                android:id="@+id/scoreView"
+                android:id="@+id/tvScore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:letterSpacing="0.1"
@@ -85,7 +85,7 @@
                 app:fontFamily="@font/font2"
                 app:layout_constraintBottom_toTopOf="@id/totalScoreView"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/scoreView" />
+                app:layout_constraintTop_toBottomOf="@id/tvScore" />
 
 
             <TextView
@@ -161,7 +161,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/text_continue"
-        app:layout_constraintBottom_toTopOf="@id/btn_main_menu"
+        app:layout_constraintBottom_toTopOf="@id/btnMainMenu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -172,7 +172,7 @@
 
 
     <com.roy.ui.menu.buttons.MenuButtonView
-        android:id="@+id/btn_main_menu"
+        android:id="@+id/btnMainMenu"
         style="@style/ButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

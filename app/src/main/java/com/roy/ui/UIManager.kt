@@ -151,8 +151,7 @@ fun MainActivity.observeScreenStates() {
                             lifecycleScope.launchWhenCreated {
                                 scoreFlow().collect { score ->
                                     if (isActive) {
-                                        scoreView.text =
-                                            getString(R.string.score_text, score)
+                                        tvScore.text = getString(R.string.score_text, score)
                                     }
                                 }
                             }
@@ -303,14 +302,14 @@ fun MainActivity.observeScreenStates() {
 
                     ScreenStates.GameOver -> {
                         gameOverScene.binding.apply {
-                            scoreView.text =
+                            tvScore.text =
                                 getString(R.string.score_text, scoreFlow().value)
 
                             if (viewModel.previousState == ScreenStates.YouDied) {
-                                diedSubtitle.text = getString(R.string.enemyBreached)
+                                tvDiedSubTitle.text = getString(R.string.enemyBreached)
                             } else {
                                 val conserveAmmoText = getString(R.string.conserveAmmo)
-                                diedSubtitle.text =
+                                tvDiedSubTitle.text =
                                     conserveAmmoText + getString(R.string.enemyBreached)
                             }
 
@@ -344,10 +343,10 @@ fun MainActivity.observeScreenStates() {
                             fromScene = gameScene.scene,
                             toScene = youDiedScene.scene,
                             transition = Fade(Fade.MODE_IN).apply {
-                                addTarget(youDiedScene.binding.diedText)
+                                addTarget(youDiedScene.binding.tvDiedText)
                                 duration = 1600L
                             })
-                        youDiedScene.binding.diedText.animate().alpha(1F).scaleX(1.5F).scaleY(1.5F)
+                        youDiedScene.binding.tvDiedText.animate().alpha(1F).scaleX(1.5F).scaleY(1.5F)
                             .setDuration(2200).withEndAction {
                                 lifecycleScope.launchWhenCreated {
                                     delay(2000L)
@@ -380,7 +379,7 @@ private fun MainActivity.startLevelZero() {
 
         lifecycleScope.launch {
             scoreFlow().collect { score ->
-                scoreView.text = getString(R.string.score_text, score)
+                tvScore.text = getString(R.string.score_text, score)
             }
         }
 

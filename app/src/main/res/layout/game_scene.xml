@@ -7,7 +7,7 @@
 
 
     <TextView
-        android:id="@+id/scoreView"
+        android:id="@+id/tvScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="12dp"
@@ -27,7 +27,7 @@
         app:layout_constraintBottom_toTopOf="@id/healthView"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scoreView">
+        app:layout_constraintTop_toBottomOf="@+id/tvScore">
 
         <com.roy.ui.game.views.bullets.BulletView
             android:id="@+id/bulletView"

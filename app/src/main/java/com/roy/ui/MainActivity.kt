@@ -11,9 +11,7 @@ import com.roy.data.DataStoreHelper.initDataStore
 import com.roy.data.SoftBodyObject
 import com.roy.data.SoftBodyObjectData
 import com.roy.data.SoftBodyObjectType
-import com.roy.databinding.ActivityMainBinding
-import com.roy.databinding.GameInitScreenBinding
-import com.roy.databinding.GameOverSceneBinding
+import com.roy.databinding.AMainBinding
 import com.roy.databinding.GameSceneBinding
 import com.roy.databinding.HighscoresSceneBinding
 import com.roy.databinding.LevelCompleteSceneBinding
@@ -21,6 +19,8 @@ import com.roy.databinding.LevelStartSceneBinding
 import com.roy.databinding.LevelStartWarpSceneBinding
 import com.roy.databinding.LevelZeroGameBinding
 import com.roy.databinding.MainMenuSceneBinding
+import com.roy.databinding.SceneGameInitBinding
+import com.roy.databinding.SceneGameOverBinding
 import com.roy.databinding.YouDiedSceneBinding
 import com.roy.ui.game.views.bullets.BulletView
 import com.roy.ui.game.views.enemyShip.EnemyDetailsCallback
@@ -34,7 +34,7 @@ import java.util.*
 class MainActivity : AppCompatActivity(), SoftBodyObject.SoftBodyObjectTracker, OnCollisionCallBack,
     EnemyDetailsCallback, LevelZeroHelper {
 
-    lateinit var binding: ActivityMainBinding
+    lateinit var binding: AMainBinding
 
     val viewModel by lazy {
         ViewModelProvider(
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity(), SoftBodyObject.SoftBodyObjectTracker, 
         )[MainViewModel::class.java]
     }
 
-    lateinit var initScene: SceneContainer<GameInitScreenBinding>
+    lateinit var initScene: SceneContainer<SceneGameInitBinding>
     lateinit var levelCompleteScene: SceneContainer<LevelCompleteSceneBinding>
     lateinit var levelZeroGameScene: SceneContainer<LevelZeroGameBinding>
     lateinit var levelStartWarpScene: SceneContainer<LevelStartWarpSceneBinding>
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity(), SoftBodyObject.SoftBodyObjectTracker, 
     lateinit var youDiedScene: SceneContainer<YouDiedSceneBinding>
     lateinit var gameScene: SceneContainer<GameSceneBinding>
     lateinit var levelStartScene: SceneContainer<LevelStartSceneBinding>
-    lateinit var gameOverScene: SceneContainer<GameOverSceneBinding>
+    lateinit var gameOverScene: SceneContainer<SceneGameOverBinding>
     lateinit var highScoreScene: SceneContainer<HighscoresSceneBinding>
     val backgroundMusicManager by lazy {
         BackgroundMusicManager(applicationContext).apply {
@@ -65,10 +65,10 @@ class MainActivity : AppCompatActivity(), SoftBodyObject.SoftBodyObjectTracker, 
 
         goFullScreen()
         initDataStore(this)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = AMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
-            binding.rootContainer.setPadding(
+            binding.flRootContainer.setPadding(
                 /* left = */ 0,
                 /* top = */ insets.systemWindowInsetTop,
                 /* right = */ 0,
@@ -81,17 +81,17 @@ class MainActivity : AppCompatActivity(), SoftBodyObject.SoftBodyObjectTracker, 
     }
 
     private fun initScenes() {
-        initScene = GameInitScreenBinding.inflate(layoutInflater, binding.root, false).let {
+        initScene = SceneGameInitBinding.inflate(layoutInflater, binding.root, false).let {
             SceneContainer(
                 binding = it,
-                scene = Scene(binding.rootContainer, it.root)
+                scene = Scene(binding.flRootContainer, it.root)
             )
         }
 
         gameMenuScene = MainMenuSceneBinding.inflate(layoutInflater, binding.root, false).let {
             SceneContainer(
                 binding = it,
-                scene = Scene(binding.rootContainer, it.root)
+                scene = Scene(binding.flRootContainer, it.root)
             )
         }
 
@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity(), SoftBodyObject.SoftBodyObjectTracker, 
             LevelStartSceneBinding.inflate(layoutInflater, binding.root, false).let {
                 SceneContainer(
                     binding = it,
-                    scene = Scene(binding.rootContainer, it.root)
+                    scene = Scene(binding.flRootContainer, it.root)
                 )
             }
 
@@ -107,7 +107,7 @@ class MainActivity : AppCompatActivity(), SoftBodyObject.SoftBodyObjectTracker, 
             YouDiedSceneBinding.inflate(layoutInflater, binding.root, false).let {
                 SceneContainer(
                     binding = it,
-                    scene = Scene(binding.rootContainer, it.root)
+                    scene = Scene(binding.flRootContainer, it.root)
                 )
             }
 
@@ -115,17 +115,17 @@ class MainActivity : AppCompatActivity(), SoftBodyObject.SoftBodyObjectTracker, 
             HighscoresSceneBinding.inflate(layoutInflater, binding.root, false).let {
                 SceneContainer(
                     binding = it,
-                    scene = Scene(binding.rootContainer, it.root)
+                    scene = Scene(binding.flRootContainer, it.root)
                 )
             }
 
         resetGameScene()
 
         gameOverScene =
-            GameOverSceneBinding.inflate(layoutInflater, binding.root, false).let {
+            SceneGameOverBinding.inflate(layoutInflater, binding.root, false).let {
                 SceneContainer(
                     binding = it,
-                    scene = Scene(binding.rootContainer, it.root)
+                    scene = Scene(binding.flRootContainer, it.root)
                 )
             }
     }
@@ -184,12 +184,12 @@ class MainActivity : AppCompatActivity(), SoftBodyObject.SoftBodyObjectTracker, 
     }
 
     fun resetGameScene() {
-        binding.rootContainer.removeAllViews()
+        binding.flRootContainer.removeAllViews()
         levelCompleteScene =
             LevelCompleteSceneBinding.inflate(layoutInflater, binding.root, false).let {
                 SceneContainer(
                     binding = it,
-                    scene = Scene(binding.rootContainer, it.root)
+                    scene = Scene(binding.flRootContainer, it.root)
                 )
             }
 
@@ -197,7 +197,7 @@ class MainActivity : AppCompatActivity(), SoftBodyObject.SoftBodyObjectTracker, 
             LevelZeroGameBinding.inflate(layoutInflater, binding.root, false).let {
                 SceneContainer(
                     binding = it,
-                    scene = Scene(binding.rootContainer, it.root)
+                    scene = Scene(binding.flRootContainer, it.root)
                 )
             }
 
@@ -205,14 +205,14 @@ class MainActivity : AppCompatActivity(), SoftBodyObject.SoftBodyObjectTracker, 
             LevelStartWarpSceneBinding.inflate(layoutInflater, binding.root, false).let {
                 SceneContainer(
                     binding = it,
-                    scene = Scene(binding.rootContainer, it.root)
+                    scene = Scene(binding.flRootContainer, it.root)
                 )
             }
 
         gameScene = GameSceneBinding.inflate(layoutInflater, binding.root, false).let {
             SceneContainer(
                 binding = it,
-                scene = Scene(binding.rootContainer, it.root)
+                scene = Scene(binding.flRootContainer, it.root)
             )
         }.apply {
             binding.apply {
