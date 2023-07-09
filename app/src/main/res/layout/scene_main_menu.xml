@@ -11,8 +11,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:clipChildren="false"
+        app:layout_constraintBottom_toTopOf="@+id/llMenu"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.55"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -32,43 +32,76 @@
 
     </FrameLayout>
 
-    <com.roy.ui.menu.buttons.MenuButtonView
-        android:id="@+id/btnStart"
-        style="@style/ButtonStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/start_game"
-        app:layout_constraintBottom_toTopOf="@+id/btnViewScores"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
-        app:layout_constraintWidth_percent="0.6" />
-
-    <com.roy.ui.menu.buttons.MenuButtonView
-        android:id="@+id/btnViewScores"
-        style="@style/ButtonStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/view_scores"
-        app:layout_constraintBottom_toTopOf="@+id/btnExit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnStart"
-        app:layout_constraintWidth_percent="0.6" />
-
-    <com.roy.ui.menu.buttons.MenuButtonView
-        android:id="@+id/btnExit"
-        style="@style/ButtonStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/exit"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/llMenu"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnViewScores"
-        app:layout_constraintWidth_percent="0.6" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.roy.ui.menu.buttons.MenuButtonView
+            android:id="@+id/btnStart"
+            style="@style/ButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="@string/start_game" />
+
+        <com.roy.ui.menu.buttons.MenuButtonView
+            android:id="@+id/btnViewScores"
+            style="@style/ButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/view_scores" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/llApp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.roy.ui.menu.buttons.MenuButtonView
+                android:id="@+id/btnRate"
+                style="@style/ButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:text="@string/rate" />
+
+            <com.roy.ui.menu.buttons.MenuButtonView
+                android:id="@+id/btnMore"
+                style="@style/ButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:text="@string/more" />
+
+            <com.roy.ui.menu.buttons.MenuButtonView
+                android:id="@+id/btnPolicy"
+                style="@style/ButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:text="@string/policy" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <com.roy.ui.menu.buttons.MenuButtonView
+            android:id="@+id/btnExit"
+            style="@style/ButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/exit" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

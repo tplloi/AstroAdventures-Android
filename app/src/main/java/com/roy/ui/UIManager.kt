@@ -67,6 +67,11 @@ fun MainActivity.observeScreenStates() {
                                 }
 
                                 addTransition(Slide(Gravity.BOTTOM)) {
+                                    addTarget(llApp)
+                                    duration = 300L
+                                }
+
+                                addTransition(Slide(Gravity.BOTTOM)) {
                                     addTarget(btnExit)
                                     duration = 300L
                                 }

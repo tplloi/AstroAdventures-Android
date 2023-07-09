@@ -21,4 +21,7 @@
     <string name="score">Score</string>
     <string name="ammo_bonus">Ammo Bonus</string>
     <string name="total">Total</string>
+    <string name="rate">Rate</string>
+    <string name="more">More</string>
+    <string name="policy">Policy</string>
 </resources>
