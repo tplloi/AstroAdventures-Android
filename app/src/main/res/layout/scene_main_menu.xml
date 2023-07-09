@@ -60,7 +60,7 @@
             android:text="@string/view_scores" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/llApp"
+            android:id="@+id/llRateMore"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -83,6 +83,23 @@
                 android:layout_marginTop="16dp"
                 android:layout_weight="1"
                 android:text="@string/more" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/llSharePolicy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.roy.ui.menu.buttons.MenuButtonView
+                android:id="@+id/btnShare"
+                style="@style/ButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:text="@string/share" />
 
             <com.roy.ui.menu.buttons.MenuButtonView
                 android:id="@+id/btnPolicy"

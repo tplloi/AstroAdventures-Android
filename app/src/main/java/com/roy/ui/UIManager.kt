@@ -67,7 +67,12 @@ fun MainActivity.observeScreenStates() {
                                 }
 
                                 addTransition(Slide(Gravity.BOTTOM)) {
-                                    addTarget(llApp)
+                                    addTarget(llRateMore)
+                                    duration = 300L
+                                }
+
+                                addTransition(Slide(Gravity.BOTTOM)) {
+                                    addTarget(llSharePolicy)
                                     duration = 300L
                                 }
 
@@ -101,6 +106,18 @@ fun MainActivity.observeScreenStates() {
                         }
                         gameMenuScene.binding.btnViewScores.setOnClickListener {
                             viewModel.updateUIState(ScreenStates.ViewHighScores)
+                        }
+                        gameMenuScene.binding.btnRate.setOnClickListener {
+
+                        }
+                        gameMenuScene.binding.btnMore.setOnClickListener {
+
+                        }
+                        gameMenuScene.binding.btnShare.setOnClickListener {
+
+                        }
+                        gameMenuScene.binding.btnPolicy.setOnClickListener {
+
                         }
                         gameMenuScene.binding.btnExit.setOnClickListener {
                             finish()
