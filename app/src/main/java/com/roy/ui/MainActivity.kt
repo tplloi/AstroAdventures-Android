@@ -12,7 +12,6 @@ import com.roy.data.SoftBodyObject
 import com.roy.data.SoftBodyObjectData
 import com.roy.data.SoftBodyObjectType
 import com.roy.databinding.AMainBinding
-import com.roy.databinding.MainMenuSceneBinding
 import com.roy.databinding.SceneGameBinding
 import com.roy.databinding.SceneGameInitBinding
 import com.roy.databinding.SceneGameLevelZeroBinding
@@ -21,7 +20,8 @@ import com.roy.databinding.SceneHighScoresBinding
 import com.roy.databinding.SceneLevelCompleteBinding
 import com.roy.databinding.SceneLevelStartBinding
 import com.roy.databinding.SceneLevelStartWarpBinding
-import com.roy.databinding.YouDiedSceneBinding
+import com.roy.databinding.SceneMainMenuBinding
+import com.roy.databinding.SceneYouDiedBinding
 import com.roy.ui.game.views.bullets.BulletView
 import com.roy.ui.game.views.enemyShip.EnemyDetailsCallback
 import com.roy.ui.game.views.enemyShip.OnCollisionCallBack
@@ -47,8 +47,8 @@ class MainActivity : AppCompatActivity(), SoftBodyObject.SoftBodyObjectTracker, 
     lateinit var levelCompleteScene: SceneContainer<SceneLevelCompleteBinding>
     lateinit var levelZeroGameScene: SceneContainer<SceneGameLevelZeroBinding>
     lateinit var levelStartWarpScene: SceneContainer<SceneLevelStartWarpBinding>
-    lateinit var gameMenuScene: SceneContainer<MainMenuSceneBinding>
-    lateinit var youDiedScene: SceneContainer<YouDiedSceneBinding>
+    lateinit var gameMenuScene: SceneContainer<SceneMainMenuBinding>
+    lateinit var youDiedScene: SceneContainer<SceneYouDiedBinding>
     lateinit var gameScene: SceneContainer<SceneGameBinding>
     lateinit var levelStartScene: SceneContainer<SceneLevelStartBinding>
     lateinit var gameOverScene: SceneContainer<SceneGameOverBinding>
@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity(), SoftBodyObject.SoftBodyObjectTracker, 
             )
         }
 
-        gameMenuScene = MainMenuSceneBinding.inflate(layoutInflater, binding.root, false).let {
+        gameMenuScene = SceneMainMenuBinding.inflate(layoutInflater, binding.root, false).let {
             SceneContainer(
                 binding = it,
                 scene = Scene(binding.flRootContainer, it.root)
@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity(), SoftBodyObject.SoftBodyObjectTracker, 
             }
 
         youDiedScene =
-            YouDiedSceneBinding.inflate(layoutInflater, binding.root, false).let {
+            SceneYouDiedBinding.inflate(layoutInflater, binding.root, false).let {
                 SceneContainer(
                     binding = it,
                     scene = Scene(binding.flRootContainer, it.root)

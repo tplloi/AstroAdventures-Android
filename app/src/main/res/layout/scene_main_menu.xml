@@ -32,14 +32,13 @@
 
     </FrameLayout>
 
-
     <com.roy.ui.menu.buttons.MenuButtonView
-        android:id="@+id/btn_start"
+        android:id="@+id/btnStart"
         style="@style/ButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/start_game"
-        app:layout_constraintBottom_toTopOf="@+id/btn_view_scores"
+        app:layout_constraintBottom_toTopOf="@+id/btnViewScores"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,20 +46,20 @@
         app:layout_constraintWidth_percent="0.6" />
 
     <com.roy.ui.menu.buttons.MenuButtonView
-        android:id="@+id/btn_view_scores"
+        android:id="@+id/btnViewScores"
         style="@style/ButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/view_scores"
-        app:layout_constraintBottom_toTopOf="@+id/btn_exit"
+        app:layout_constraintBottom_toTopOf="@+id/btnExit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_start"
+        app:layout_constraintTop_toBottomOf="@+id/btnStart"
         app:layout_constraintWidth_percent="0.6" />
 
     <com.roy.ui.menu.buttons.MenuButtonView
-        android:id="@+id/btn_exit"
+        android:id="@+id/btnExit"
         style="@style/ButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -69,7 +68,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_view_scores"
+        app:layout_constraintTop_toBottomOf="@+id/btnViewScores"
         app:layout_constraintWidth_percent="0.6" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
