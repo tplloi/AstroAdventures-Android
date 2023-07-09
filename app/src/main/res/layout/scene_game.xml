@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,7 +20,7 @@
         tools:text="1235" />
 
     <com.roy.ui.game.views.containerView.ContainerView
-        android:id="@+id/container_view"
+        android:id="@+id/containerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/healthView"
@@ -48,7 +47,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.roy.ui.game.views.enemyShip.EnemyClusterView
-            android:id="@+id/enemiesView"
+            android:id="@+id/enemyClusterView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/guideline"
@@ -87,7 +86,6 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="1235" />
 
-
     <com.roy.ui.game.views.playersHealth.PlayerHealthView
         android:id="@+id/healthView"
         android:layout_width="0dp"
@@ -99,6 +97,5 @@
         app:layout_constraintHeight_percent="0.04"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

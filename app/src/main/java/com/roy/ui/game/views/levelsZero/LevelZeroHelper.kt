@@ -122,8 +122,8 @@ interface LevelZeroHelper {
                         }
                         DialogHelper.InstructionType.EnemySpotted -> {
                             dialogHelper.setLock()
-                            enemiesView.disableInit = true
-                            enemiesView.animate()
+                            enemyClusterView.disableInit = true
+                            enemyClusterView.animate()
                                 .translationYBy((resources.getDimension(R.dimen.enemyTranslateY)))
                                 .setDuration(2000L)
                                 .withEndAction {
@@ -142,7 +142,7 @@ interface LevelZeroHelper {
                             delay(dialog.duration)
                             TransitionManager.beginDelayedTransition(root)
                             dialogView.isVisible = false
-                            enemiesView.startGame()
+                            enemyClusterView.startGame()
                             return
                         }
                     }
@@ -180,7 +180,7 @@ interface LevelZeroHelper {
         val softBodyObjectTracker = object : SoftBodyObject.SoftBodyObjectTracker {
             override fun initBulletTracking(softBodyObjectData: SoftBodyObjectData) {
                 if (softBodyObjectData.sender == BulletView.Sender.PLAYER) {
-                    levelZeroGameBinding.enemiesView.checkCollision(softBodyObjectData)
+                    levelZeroGameBinding.enemyClusterView.checkCollision(softBodyObjectData)
                 } else {
                     levelZeroGameBinding.spaceShipView.checkCollision(softBodyObjectData)
                 }
@@ -190,7 +190,7 @@ interface LevelZeroHelper {
                 if (sender == BulletView.Sender.PLAYER) {
                     levelZeroGameBinding.spaceShipView.removeSoftBodyEntry(bulletId)
                 } else {
-                    levelZeroGameBinding.enemiesView.removeSoftBodyEntry(bulletId)
+                    levelZeroGameBinding.enemyClusterView.removeSoftBodyEntry(bulletId)
                 }
             }
 
@@ -226,8 +226,8 @@ interface LevelZeroHelper {
         levelZeroGameBinding.apply {
             bulletView.softBodyObjectTracker = softBodyObjectTracker
             dropsView.softBodyObjectTracker = softBodyObjectTracker
-            enemiesView.enemyDetailsCallback = enemyDetailsCallback
-            enemiesView.onCollisionCallBack = onCollisionCallBack
+            enemyClusterView.enemyDetailsCallback = enemyDetailsCallback
+            enemyClusterView.onCollisionCallBack = onCollisionCallBack
             spaceShipView.onCollisionCallBack = onCollisionCallBack
         }
     }

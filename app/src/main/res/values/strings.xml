@@ -17,4 +17,8 @@
     <string name="level_complete">Level %1$d Complete</string>
     <string name="level">Level %1$d - %2$d</string>
     <string name="text_continue">Continue</string>
+    <string name="high_score">High Score</string>
+    <string name="score">Score</string>
+    <string name="ammo_bonus">Ammo Bonus</string>
+    <string name="total">Total</string>
 </resources>

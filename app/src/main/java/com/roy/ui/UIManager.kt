@@ -18,7 +18,7 @@ import com.roy.data.BulletStore.Companion.getAmountScore
 import com.roy.data.Score
 import com.roy.data.Score.saveScore
 import com.roy.data.Score.scoreFlow
-import com.roy.databinding.GameSceneBinding
+import com.roy.databinding.SceneGameBinding
 import com.roy.ui.game.views.bullets.BulletView
 import com.roy.utils.PLAYER_BULLET_SOUND
 import com.roy.utils.SoundData
@@ -136,7 +136,7 @@ fun MainActivity.observeScreenStates() {
                         gameScene.binding.apply {
                             val bulletStore =
                                 com.roy.data.BulletStore(com.roy.data.BulletStore.REFILL)
-                            enemiesView.bulletStore = bulletStore
+                            enemyClusterView.bulletStore = bulletStore
                             spaceShipView.bulletStore = bulletStore
                             spaceShipView.onHitCallBack = {
                                 containerView.startShakeAnimation(
@@ -177,7 +177,7 @@ fun MainActivity.observeScreenStates() {
                                     addTransition(Slide(Gravity.TOP)) {
                                         duration = 2200
                                         interpolator = LinearInterpolator()
-                                        addTarget(enemiesView)
+                                        addTarget(enemyClusterView)
                                     }
                                     onEnd {
                                         startGame(gameScene.binding)
@@ -226,7 +226,7 @@ fun MainActivity.observeScreenStates() {
                         levelCompleteScene.binding.apply {
                             successText.text =
                                 getString(R.string.level_complete, com.roy.data.LevelInfo.level)
-                            scoreViewValue.text = scoreFlow().value.toString()
+                            tvScoreViewValue.text = scoreFlow().value.toString()
 
                             uiEventJob = lifecycleScope.launchWhenCreated {
                                 delay(1500L)
@@ -275,7 +275,7 @@ fun MainActivity.observeScreenStates() {
                                     .zip(com.roy.data.DataStoreHelper.getMaxLevels()) { highScore, maxLevels ->
                                         Pair(first = maxLevels, second = highScore)
                                     }.collect {
-                                        scoreBoard.text =
+                                        cvScoreBoard.text =
                                             getString(R.string.level, it.first, it.second)
                                     }
                             }
@@ -346,7 +346,8 @@ fun MainActivity.observeScreenStates() {
                                 addTarget(youDiedScene.binding.tvDiedText)
                                 duration = 1600L
                             })
-                        youDiedScene.binding.tvDiedText.animate().alpha(1F).scaleX(1.5F).scaleY(1.5F)
+                        youDiedScene.binding.tvDiedText.animate().alpha(1F).scaleX(1.5F)
+                            .scaleY(1.5F)
                             .setDuration(2200).withEndAction {
                                 lifecycleScope.launchWhenCreated {
                                     delay(2000L)
@@ -374,7 +375,7 @@ private fun MainActivity.startLevelZero() {
     levelZeroGameScene.binding.apply {
         val bulletStore = com.roy.data.BulletStore(com.roy.data.BulletStore.REFILL)
 
-        enemiesView.bulletStore = bulletStore
+        enemyClusterView.bulletStore = bulletStore
         spaceShipView.bulletStore = bulletStore
 
         lifecycleScope.launch {
@@ -408,9 +409,9 @@ private fun MainActivity.startLevelZero() {
     }
 }
 
-fun startGame(binding: GameSceneBinding) {
+fun startGame(binding: SceneGameBinding) {
     binding.spaceShipView.startGame()
-    binding.enemiesView.startGame()
+    binding.enemyClusterView.startGame()
 }
 
 data class SceneContainer<Binding : ViewBinding>(

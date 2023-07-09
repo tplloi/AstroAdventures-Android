@@ -56,7 +56,7 @@
 
 
     <com.roy.ui.game.views.enemyShip.EnemyClusterView
-        android:id="@+id/enemiesView"
+        android:id="@+id/enemyClusterView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:translationY="@dimen/enemyTranslateNegativeY"

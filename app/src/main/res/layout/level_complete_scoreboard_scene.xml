@@ -16,7 +16,7 @@
         android:textColor="@color/bulletColor"
         android:textSize="@dimen/menu_logo_text_size"
         app:fontFamily="@font/font2"
-        app:layout_constraintBottom_toTopOf="@+id/scoreBoard"
+        app:layout_constraintBottom_toTopOf="@+id/cvScoreBoard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,14 +27,14 @@
 
 
     <androidx.constraintlayout.widget.Group
-        android:id="@+id/scoreBoard_group"
+        android:id="@+id/groupScoreBoard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="visible"
-        app:constraint_referenced_ids="scoreBoard,btnMainMenu,btn_continue" />
+        app:constraint_referenced_ids="cvScoreBoard,btnMainMenu,btnContinue" />
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/scoreBoard"
+        android:id="@+id/cvScoreBoard"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
@@ -106,7 +106,7 @@
 
 
             <TextView
-                android:id="@+id/scoreViewValue"
+                android:id="@+id/tvScoreViewValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:letterSpacing="0.1"
@@ -131,7 +131,7 @@
                 app:fontFamily="@font/font2"
                 app:layout_constraintBottom_toTopOf="@id/totalScoreValueView"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/scoreViewValue"
+                app:layout_constraintTop_toBottomOf="@id/tvScoreViewValue"
                 tools:text="200" />
 
 
@@ -156,7 +156,7 @@
 
 
     <com.roy.ui.menu.buttons.MenuButtonView
-        android:id="@+id/btn_continue"
+        android:id="@+id/btnContinue"
         style="@style/ButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -165,7 +165,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scoreBoard"
+        app:layout_constraintTop_toBottomOf="@+id/cvScoreBoard"
         app:layout_constraintVertical_bias="0.39"
         app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintWidth_percent="0.6" />
@@ -182,7 +182,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_continue"
+        app:layout_constraintTop_toBottomOf="@id/btnContinue"
         app:layout_constraintWidth_percent="0.6" />
 
 
