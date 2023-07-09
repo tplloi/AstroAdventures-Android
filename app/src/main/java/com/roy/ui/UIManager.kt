@@ -185,7 +185,7 @@ fun MainActivity.observeScreenStates() {
                                         val itemSoundManger = SoundManager(
                                             context = applicationContext,
                                             soundData = SoundData(
-                                                R.raw.player_bullet_sound,
+                                                R.raw.music_player_bullet,
                                                 PLAYER_BULLET_SOUND
                                             ),
                                             lifecycle = lifecycle
@@ -332,7 +332,7 @@ fun MainActivity.observeScreenStates() {
 
                     ScreenStates.YouDied -> {
                         val deathSoundManager = MediaPlayer.create(
-                            this@observeScreenStates, R.raw.player_explosion
+                            this@observeScreenStates, R.raw.music_player_explosion
                         ).also {
                             it.setOnPreparedListener {
                                 it.start()

@@ -42,7 +42,7 @@ interface LevelZeroHelper {
             val itemSoundManger = SoundManager(
                 applicationContext,
                 SoundData(
-                    R.raw.player_bullet_sound,
+                    R.raw.music_player_bullet,
                     PLAYER_BULLET_SOUND
                 ),
                 lifecycle

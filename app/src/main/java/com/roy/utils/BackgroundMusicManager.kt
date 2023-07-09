@@ -12,7 +12,7 @@ class BackgroundMusicManager(val context: Context) : LifecycleObserver {
     private var mediaPlayer: MediaPlayer? = null
 
     private fun startMusic() {
-        mediaPlayer = MediaPlayer.create(context, R.raw.astro_adventures_menu)
+        mediaPlayer = MediaPlayer.create(context, R.raw.music_adventures_menu)
         mediaPlayer?.setOnPreparedListener {
             it.start()
         }
