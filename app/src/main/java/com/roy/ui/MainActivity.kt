@@ -12,15 +12,15 @@ import com.roy.data.SoftBodyObject
 import com.roy.data.SoftBodyObjectData
 import com.roy.data.SoftBodyObjectType
 import com.roy.databinding.AMainBinding
-import com.roy.databinding.LevelStartSceneBinding
-import com.roy.databinding.LevelStartWarpSceneBinding
-import com.roy.databinding.LevelZeroGameBinding
 import com.roy.databinding.MainMenuSceneBinding
 import com.roy.databinding.SceneGameBinding
 import com.roy.databinding.SceneGameInitBinding
+import com.roy.databinding.SceneGameLevelZeroBinding
 import com.roy.databinding.SceneGameOverBinding
 import com.roy.databinding.SceneHighScoresBinding
 import com.roy.databinding.SceneLevelCompleteBinding
+import com.roy.databinding.SceneLevelStartBinding
+import com.roy.databinding.SceneLevelStartWarpBinding
 import com.roy.databinding.YouDiedSceneBinding
 import com.roy.ui.game.views.bullets.BulletView
 import com.roy.ui.game.views.enemyShip.EnemyDetailsCallback
@@ -45,12 +45,12 @@ class MainActivity : AppCompatActivity(), SoftBodyObject.SoftBodyObjectTracker, 
 
     lateinit var initScene: SceneContainer<SceneGameInitBinding>
     lateinit var levelCompleteScene: SceneContainer<SceneLevelCompleteBinding>
-    lateinit var levelZeroGameScene: SceneContainer<LevelZeroGameBinding>
-    lateinit var levelStartWarpScene: SceneContainer<LevelStartWarpSceneBinding>
+    lateinit var levelZeroGameScene: SceneContainer<SceneGameLevelZeroBinding>
+    lateinit var levelStartWarpScene: SceneContainer<SceneLevelStartWarpBinding>
     lateinit var gameMenuScene: SceneContainer<MainMenuSceneBinding>
     lateinit var youDiedScene: SceneContainer<YouDiedSceneBinding>
     lateinit var gameScene: SceneContainer<SceneGameBinding>
-    lateinit var levelStartScene: SceneContainer<LevelStartSceneBinding>
+    lateinit var levelStartScene: SceneContainer<SceneLevelStartBinding>
     lateinit var gameOverScene: SceneContainer<SceneGameOverBinding>
     lateinit var highScoreScene: SceneContainer<SceneHighScoresBinding>
     val backgroundMusicManager by lazy {
@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity(), SoftBodyObject.SoftBodyObjectTracker, 
         }
 
         levelStartScene =
-            LevelStartSceneBinding.inflate(layoutInflater, binding.root, false).let {
+            SceneLevelStartBinding.inflate(layoutInflater, binding.root, false).let {
                 SceneContainer(
                     binding = it,
                     scene = Scene(binding.flRootContainer, it.root)
@@ -194,7 +194,7 @@ class MainActivity : AppCompatActivity(), SoftBodyObject.SoftBodyObjectTracker, 
             }
 
         levelZeroGameScene =
-            LevelZeroGameBinding.inflate(layoutInflater, binding.root, false).let {
+            SceneGameLevelZeroBinding.inflate(layoutInflater, binding.root, false).let {
                 SceneContainer(
                     binding = it,
                     scene = Scene(binding.flRootContainer, it.root)
@@ -202,7 +202,7 @@ class MainActivity : AppCompatActivity(), SoftBodyObject.SoftBodyObjectTracker, 
             }
 
         levelStartWarpScene =
-            LevelStartWarpSceneBinding.inflate(layoutInflater, binding.root, false).let {
+            SceneLevelStartWarpBinding.inflate(layoutInflater, binding.root, false).let {
                 SceneContainer(
                     binding = it,
                     scene = Scene(binding.flRootContainer, it.root)

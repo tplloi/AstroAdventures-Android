@@ -12,7 +12,7 @@ import com.roy.data.LevelInfo
 import com.roy.data.SoftBodyObject
 import com.roy.data.SoftBodyObjectData
 import com.roy.data.SoftBodyObjectType
-import com.roy.databinding.LevelZeroGameBinding
+import com.roy.databinding.SceneGameLevelZeroBinding
 import com.roy.ui.MainActivity
 import com.roy.ui.ScreenStates
 import com.roy.ui.game.views.bullets.BulletView
@@ -32,7 +32,7 @@ import java.util.*
 interface LevelZeroHelper {
 
     fun MainActivity.showInitialInstructions(
-        levelZeroGameBinding: LevelZeroGameBinding,
+        levelZeroGameBinding: SceneGameLevelZeroBinding,
         bulletStore: com.roy.data.BulletStore,
     ) {
         var dialogJob: Job = Job()
@@ -53,7 +53,7 @@ interface LevelZeroHelper {
 
             val dialogHelper = DialogHelper()
 
-            suspend fun LevelZeroGameBinding.handleDialogs() {
+            suspend fun SceneGameLevelZeroBinding.handleDialogs() {
                 val nextDialog = dialogHelper.getNextDialog()
                 nextDialog?.let { dialog ->
                     when (dialog.type) {
@@ -168,7 +168,7 @@ interface LevelZeroHelper {
     }
 
     fun MainActivity.initUIComponents(
-        levelZeroGameBinding: LevelZeroGameBinding,
+        levelZeroGameBinding: SceneGameLevelZeroBinding,
         mainActivity: MainActivity,
     ) {
         levelZeroGameBinding.guideline.updateLayoutParams<ConstraintLayout.LayoutParams> {
