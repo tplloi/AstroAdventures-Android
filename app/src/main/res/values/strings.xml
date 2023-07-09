@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">Astro Adventures</string>
     <string name="score_text">Score : %1$d</string>
     <string name="ammo_reserve_text">Ammo Reserve : %1$d</string>
     <string name="start_game">Start Game</string>

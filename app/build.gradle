@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    namespace 'com.roy'
     compileSdk 33
 
     defaultConfig {
@@ -20,17 +21,6 @@ android {
             excludes += ['DebugProbesKt.bin']
         }
     }
-    buildTypes {
-        release {
-            postprocessing {
-                removeUnusedCode true
-                removeUnusedResources true
-                obfuscate false
-                optimizeCode true
-            }
-//            signingConfig signingConfigs.release
-        }
-    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -41,7 +31,71 @@ android {
     buildFeatures {
         viewBinding true
     }
-    namespace 'com.roy'
+    signingConfigs {
+        release {
+            storeFile file("keystore.jks")
+            storePassword KS_PW
+            keyAlias KS_ALIAS
+            keyPassword KS_PW
+        }
+    }
+    buildTypes {
+        release {
+            debuggable false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+
+//            postprocessing {
+//                removeUnusedCode true
+//                removeUnusedResources true
+//                obfuscate false
+//                optimizeCode true
+//            }
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = defaultConfig.applicationId + buildType.name + "_" + defaultConfig.versionName + "_" + defaultConfig.versionCode + ".apk"
+        }
+    }
+
+    flavorDimensions "type"
+    productFlavors {
+
+        dev {
+//            applicationId = "com.roy93group.astroadventures.dev"
+            dimension "type"
+            buildConfigField("String", "FLAVOR_buildEnv", '"dev"')
+            resValue "string", "app_name", "Astro Adventures III DEV"
+
+//            resValue("string", "SDK_KEY", "e75FnQfS9XTTqM1Kne69U7PW_MBgAnGQTFvtwVVui6kRPKs5L7ws9twr5IQWwVfzPKZ5pF2IfDa7lguMgGlCyt")
+//            resValue "string", "BANNER", "18a3d1924d3ebee6"
+//            resValue "string", "INTER", "895d5d41cb20edb7"
+//
+//            resValue "string", "EnableAdInter", "false"
+//            resValue "string", "EnableAdBanner", "false"
+        }
+
+        production {
+//            applicationId = "com.roy93group.astroadventures.prod"
+            dimension "type"
+            buildConfigField("String", "FLAVOR_buildEnv", '"prod"')
+            resValue "string", "app_name", "Astro Adventures III"
+
+//            resValue("string", "SDK_KEY", "e75FnQfS9XTTqM1Kne69U7PW_MBgAnGQTFvtwVVui6kRPKs5L7ws9twr5IQWwVfzPKZ5pF2IfDa7lguMgGlCyt")
+//            resValue "string", "BANNER", "18a3d1924d3ebee6"
+//            resValue "string", "INTER", "895d5d41cb20edb7"
+//
+//            resValue "string", "EnableAdInter", "true"
+//            resValue "string", "EnableAdBanner", "true"
+        }
+
+    }
 }
 
 dependencies {

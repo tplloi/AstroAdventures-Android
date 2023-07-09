@@ -2,9 +2,6 @@ package com.roy
 
 import android.app.Application
 
-//TODO keystore
-//TODO rename app
-
 //TODO applovin
 
 //done
@@ -14,6 +11,8 @@ import android.app.Application
 //leak canary
 //rate, more app, share app
 //policy
+//keystore
+//rename app
 
 class MyApp : Application() {
     override fun onCreate() {
