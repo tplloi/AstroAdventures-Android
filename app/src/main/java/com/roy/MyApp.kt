@@ -12,6 +12,7 @@ import android.app.Application
 //TODO ad
 
 //done
+//permission manifest
 
 class MyApp : Application() {
     override fun onCreate() {
